@@ -1,0 +1,4616 @@
+Here are all the E-Borrow files. Copy each one to your GitHub repository:
+
+=== README.md ===
+# E-Borrow - Peer-to-Peer Rental Platform
+
+A modern, responsive web application for peer-to-peer item rentals. Users can list their items for rent and browse/rent items from others in their community.
+
+## 🎨 Design Features
+
+- **Modern UI/UX**: Clean, minimalist design with rounded corners and subtle shadows
+- **Brand Colors**: 
+  - Primary: Indigo (#4B5FB5)
+  - Secondary: Sky Blue (#8FCBF2)
+  - Accent: Lemon Yellow (#FFD166)
+  - Text: Charcoal (#2F2F2F)
+  - Background: Soft White (#F9F9F9)
+- **Typography**: Inter font family for modern, readable text
+- **Mobile-First**: Fully responsive design that works on all devices
+- **Accessibility**: Proper contrast ratios and semantic HTML
+
+## 🚀 Features
+
+### Homepage
+- Hero section with clear value proposition
+- How It Works (3-step process)
+- Popular categories with icons
+- Featured listings carousel
+- Trust-building section
+- Comprehensive footer
+
+### User Authentication
+- Login/Register forms
+- Google Sign-In integration (simulated)
+- Form validation
+- Responsive design
+
+### Browse & Search
+- Advanced search with filters
+- Category, location, and price filtering
+- Sort options (price, rating, newest)
+- Real-time search results
+- Filter tags for active filters
+
+### Item Listing
+- Comprehensive item posting form
+- Image upload with drag & drop
+- Pricing options (daily, weekly, monthly)
+- Location and availability settings
+- Form validation and preview
+
+### Item Details
+- Detailed item information
+- Image gallery
+- Owner profile section
+- Booking calendar with price calculation
+- Reviews and ratings
+- Contact owner functionality
+
+### User Dashboard
+- Overview with statistics
+- My listings management
+- Rental history
+- Booking requests
+- Messages (placeholder)
+- Account settings
+
+### Admin Dashboard
+- Platform analytics
+- User management
+- Listing moderation
+- Transaction monitoring
+- Reports and issues handling
+
+## 📱 Pages
+
+1. **Homepage** (`index.html`) - Landing page with hero, features, and listings
+2. **Login/Register** (`login.html`) - Authentication forms
+3. **Browse Items** (`search.html`) - Search and filter listings
+4. **Post Item** (`post-item.html`) - Create new listings
+5. **Item Details** (`item-detail.html`) - Detailed item view
+6. **User Dashboard** (`dashboard.html`) - User account management
+7. **Admin Dashboard** (`admin.html`) - Platform administration
+
+## 🛠 Technology Stack
+
+- **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
+- **Styling**: Custom CSS with CSS Variables
+- **Icons**: Font Awesome 6
+- **Fonts**: Google Fonts (Inter)
+- **Server**: Python HTTP Server (for demo)
+
+## 🎯 Demo Features
+
+- **Dummy Data**: Pre-populated with sample listings and users
+- **Local Storage**: Simulated user authentication
+- **Interactive Elements**: Working forms, filters, and navigation
+- **Responsive Design**: Tested on mobile and desktop
+- **Modern Animations**: Smooth transitions and hover effects
+
+## 🚀 Getting Started
+
+1. **Clone or download** the project files
+2. **Navigate** to the project directory
+3. **Start the server**:
+   ```bash
+   python server.py
+   ```
+4. **Open your browser** and visit:
+   - Local: `http://localhost:12001`
+   - Production: `https://work-2-ktgelzsfqhtmxoqe.prod-runtime.all-hands.dev`
+
+## 📂 File Structure
+
+```
+e-borrow/
+├── index.html          # Homepage
+├── login.html          # Authentication
+├── search.html         # Browse items
+├── post-item.html      # List new item
+├── item-detail.html    # Item details
+├── dashboard.html      # User dashboard
+├── admin.html          # Admin dashboard
+├── styles.css          # Main stylesheet
+├── script.js           # JavaScript functionality
+├── server.py           # Python server
+└── README.md           # Documentation
+```
+
+## 🎨 Design Principles
+
+- **Mobile-First**: Designed for mobile devices first, then enhanced for desktop
+- **Clean & Minimal**: Uncluttered interface focusing on content
+- **Consistent**: Uniform spacing, colors, and typography throughout
+- **Accessible**: High contrast ratios and semantic HTML
+- **Fast**: Optimized for quick loading and smooth interactions
+
+## 🔧 Customization
+
+The design system uses CSS variables for easy customization:
+
+```css
+:root {
+    --primary: #4B5FB5;
+    --secondary: #8FCBF2;
+    --accent: #FFD166;
+    --text: #2F2F2F;
+    --background: #F9F9F9;
+}
+```
+
+## 📱 Responsive Breakpoints
+
+- **Mobile**: < 768px
+- **Tablet**: 768px - 1024px
+- **Desktop**: > 1024px
+
+## 🚀 Future Enhancements
+
+- Real backend integration
+- Payment processing
+- Real-time messaging
+- Push notifications
+- Advanced analytics
+- Mobile app versions
+- Multi-language support
+
+## 📄 License
+
+This is a demo project created for educational purposes.
+
+=== index.html ===
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Borrow - Rent Anything, Anytime</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <i class="fas fa-exchange-alt"></i>
+                    E-Borrow
+                </a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="search.html" class="nav-link">Browse</a>
+                <a href="post-item.html" class="nav-link">List Item</a>
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="login.html" class="nav-link">Login</a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Rent Anything, <span class="text-accent">Anytime</span></h1>
+                <p class="hero-subtitle">Join the peer-to-peer rental revolution. List your items or find what you need from trusted neighbors.</p>
+                <div class="hero-buttons">
+                    <a href="post-item.html" class="btn btn-primary">Post Item</a>
+                    <a href="search.html" class="btn btn-secondary">Browse Items</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-card">
+                    <i class="fas fa-camera"></i>
+                    <h3>Camera</h3>
+                    <p>$25/day</p>
+                </div>
+                <div class="hero-card">
+                    <i class="fas fa-car"></i>
+                    <h3>Car</h3>
+                    <p>$45/day</p>
+                </div>
+                <div class="hero-card">
+                    <i class="fas fa-tools"></i>
+                    <h3>Tools</h3>
+                    <p>$15/day</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>1. Search & Discover</h3>
+                    <p>Browse thousands of items available for rent in your area. From cameras to cars, find exactly what you need.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>2. Connect & Book</h3>
+                    <p>Message the owner, agree on terms, and book your rental. Our secure platform handles payments and insurance.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>3. Enjoy & Review</h3>
+                    <p>Pick up your item, enjoy your rental, and leave a review. Build trust in our community of borrowers and lenders.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title">Popular Categories</h2>
+            <div class="category-grid">
+                <div class="category-card">
+                    <i class="fas fa-camera"></i>
+                    <h3>Photography</h3>
+                    <p>Cameras, lenses, lighting</p>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-car"></i>
+                    <h3>Vehicles</h3>
+                    <p>Cars, bikes, scooters</p>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-tools"></i>
+                    <h3>Tools</h3>
+                    <p>Power tools, equipment</p>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-couch"></i>
+                    <h3>Furniture</h3>
+                    <p>Tables, chairs, decor</p>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-gamepad"></i>
+                    <h3>Electronics</h3>
+                    <p>Gaming, audio, tech</p>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-dumbbell"></i>
+                    <h3>Sports</h3>
+                    <p>Equipment, gear, bikes</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Listings -->
+    <section class="featured">
+        <div class="container">
+            <h2 class="section-title">Featured Listings</h2>
+            <div class="listings-carousel">
+                <div class="listing-card">
+                    <div class="listing-image">
+                        <div class="placeholder-image">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                    </div>
+                    <div class="listing-content">
+                        <h3>Canon EOS R5</h3>
+                        <p class="listing-location"><i class="fas fa-map-marker-alt"></i> San Francisco, CA</p>
+                        <p class="listing-price">$35/day</p>
+                        <div class="listing-rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.9 (23 reviews)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="listing-card">
+                    <div class="listing-image">
+                        <div class="placeholder-image">
+                            <i class="fas fa-car"></i>
+                        </div>
+                    </div>
+                    <div class="listing-content">
+                        <h3>Tesla Model 3</h3>
+                        <p class="listing-location"><i class="fas fa-map-marker-alt"></i> Los Angeles, CA</p>
+                        <p class="listing-price">$89/day</p>
+                        <div class="listing-rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.8 (45 reviews)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="listing-card">
+                    <div class="listing-image">
+                        <div class="placeholder-image">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                    </div>
+                    <div class="listing-content">
+                        <h3>DeWalt Drill Set</h3>
+                        <p class="listing-location"><i class="fas fa-map-marker-alt"></i> New York, NY</p>
+                        <p class="listing-price">$15/day</p>
+                        <div class="listing-rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.7 (12 reviews)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="trust">
+        <div class="container">
+            <h2 class="section-title">Why Choose E-Borrow?</h2>
+            <div class="trust-features">
+                <div class="trust-feature">
+                    <div class="trust-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Secure & Insured</h3>
+                    <p>All rentals are covered by our comprehensive insurance policy. Your items and transactions are protected.</p>
+                </div>
+                <div class="trust-feature">
+                    <div class="trust-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Verified Community</h3>
+                    <p>All users are verified through ID checks and reviews. Build trust with our community-driven rating system.</p>
+                </div>
+                <div class="trust-feature">
+                    <div class="trust-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>24/7 Support</h3>
+                    <p>Our customer support team is available around the clock to help with any questions or issues.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-exchange-alt"></i>
+                        E-Borrow
+                    </div>
+                    <p>The peer-to-peer rental platform that connects neighbors and builds community.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Platform</h4>
+                    <ul>
+                        <li><a href="search.html">Browse Items</a></li>
+                        <li><a href="post-item.html">List an Item</a></li>
+                        <li><a href="#">How It Works</a></li>
+                        <li><a href="#">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Safety</a></li>
+                        <li><a href="#">Insurance</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 E-Borrow. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+=== login.html ===
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - E-Borrow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--background) 0%, #e8f4fd 100%);
+            padding: 2rem 1rem;
+        }
+
+        .auth-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            padding: 3rem;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .auth-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-subtitle {
+            color: var(--gray-dark);
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-radius: var(--border-radius-sm);
+            background: var(--gray-light);
+            padding: 4px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 0.75rem;
+            text-align: center;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .auth-tab.active {
+            background: var(--white);
+            color: var(--primary);
+            box-shadow: var(--shadow);
+        }
+
+        .auth-form {
+            margin-bottom: 2rem;
+        }
+
+        .google-btn {
+            width: 100%;
+            background: var(--white);
+            border: 2px solid var(--gray-medium);
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .google-btn:hover {
+            background: var(--gray-light);
+            border-color: var(--gray-dark);
+        }
+
+        .divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            position: relative;
+            color: var(--gray-dark);
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--gray-medium);
+        }
+
+        .divider span {
+            background: var(--white);
+            padding: 0 1rem;
+        }
+
+        .auth-footer {
+            text-align: center;
+            color: var(--gray-dark);
+        }
+
+        .auth-footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 480px) {
+            .auth-card {
+                padding: 2rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <i class="fas fa-exchange-alt"></i>
+                    E-Borrow
+                </div>
+                <h1 class="auth-title">Welcome Back</h1>
+                <p class="auth-subtitle">Sign in to your account or create a new one</p>
+            </div>
+
+            <div class="auth-tabs">
+                <div class="auth-tab active" onclick="switchTab('login')">Login</div>
+                <div class="auth-tab" onclick="switchTab('register')">Register</div>
+            </div>
+
+            <!-- Login Form -->
+            <div id="login-form" class="auth-form">
+                <button class="btn google-btn" onclick="signInWithGoogle()">
+                    <i class="fab fa-google"></i>
+                    Continue with Google
+                </button>
+
+                <div class="divider">
+                    <span>or</span>
+                </div>
+
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" required placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-input" required placeholder="Enter your password">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Sign In</button>
+                </form>
+            </div>
+
+            <!-- Register Form -->
+            <div id="register-form" class="auth-form" style="display: none;">
+                <button class="btn google-btn" onclick="signInWithGoogle()">
+                    <i class="fab fa-google"></i>
+                    Continue with Google
+                </button>
+
+                <div class="divider">
+                    <span>or</span>
+                </div>
+
+                <form onsubmit="handleRegister(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">First Name</label>
+                            <input type="text" class="form-input" required placeholder="First name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Last Name</label>
+                            <input type="text" class="form-input" required placeholder="Last name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" required placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-input" required placeholder="Create a password">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Confirm Password</label>
+                        <input type="password" class="form-input" required placeholder="Confirm your password">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
+                </form>
+            </div>
+
+            <div class="auth-footer">
+                <p>By continuing, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function switchTab(tab) {
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            const tabs = document.querySelectorAll('.auth-tab');
+
+            tabs.forEach(t => t.classList.remove('active'));
+
+            if (tab === 'login') {
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+                tabs[0].classList.add('active');
+                document.querySelector('.auth-title').textContent = 'Welcome Back';
+                document.querySelector('.auth-subtitle').textContent = 'Sign in to your account';
+            } else {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+                tabs[1].classList.add('active');
+                document.querySelector('.auth-title').textContent = 'Create Account';
+                document.querySelector('.auth-subtitle').textContent = 'Join our community today';
+            }
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const email = formData.get('email') || event.target.querySelector('input[type="email"]').value;
+            const password = formData.get('password') || event.target.querySelector('input[type="password"]').value;
+
+            // Simulate login
+            localStorage.setItem('user', JSON.stringify({
+                name: 'Demo User',
+                email: email,
+                avatar: 'https://via.placeholder.com/40'
+            }));
+
+            alert('Login successful!');
+            window.location.href = 'dashboard.html';
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            const inputs = event.target.querySelectorAll('input');
+            const firstName = inputs[0].value;
+            const lastName = inputs[1].value;
+            const email = inputs[2].value;
+            const password = inputs[3].value;
+            const confirmPassword = inputs[4].value;
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            // Simulate registration
+            localStorage.setItem('user', JSON.stringify({
+                name: `${firstName} ${lastName}`,
+                email: email,
+                avatar: 'https://via.placeholder.com/40'
+            }));
+
+            alert('Account created successfully!');
+            window.location.href = 'dashboard.html';
+        }
+    </script>
+</body>
+</html>
+
+=== search.html ===
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Items - E-Borrow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <style>
+        .search-header {
+            background: var(--white);
+            padding: 100px 0 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .search-bar {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr auto;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            align-items: end;
+        }
+
+        .search-input {
+            position: relative;
+        }
+
+        .search-input input {
+            width: 100%;
+            padding: 12px 16px 12px 45px;
+            border: 2px solid var(--gray-medium);
+            border-radius: var(--border-radius-sm);
+            font-size: 1rem;
+        }
+
+        .search-input i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-dark);
+        }
+
+        .filter-section {
+            background: var(--background);
+            padding: 2rem 0;
+        }
+
+        .filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .filter-tag {
+            background: var(--primary);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-tag i {
+            cursor: pointer;
+        }
+
+        .results-section {
+            padding: 2rem 0;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .results-count {
+            color: var(--gray-dark);
+        }
+
+        .sort-select {
+            padding: 8px 12px;
+            border: 1px solid var(--gray-medium);
+            border-radius: var(--border-radius-sm);
+            background: var(--white);
+        }
+
+        .listings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--gray-dark);
+        }
+
+        .no-results i {
+            font-size: 4rem;
+            color: var(--gray-medium);
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .search-bar {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .results-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+
+            .listings-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <i class="fas fa-exchange-alt"></i>
+                    E-Borrow
+                </a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="search.html" class="nav-link">Browse</a>
+                <a href="post-item.html" class="nav-link">List Item</a>
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="login.html" class="nav-link">Login</a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Header -->
+    <section class="search-header">
+        <div class="container">
+            <h1>Browse Items</h1>
+            <div class="search-bar">
+                <div class="search-input">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="search-input" placeholder="Search for items..." onkeyup="performSearch()">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <select id="category-filter" class="form-select" onchange="performSearch()">
+                        <option value="">All Categories</option>
+                        <option value="Photography">Photography</option>
+                        <option value="Vehicles">Vehicles</option>
+                        <option value="Tools">Tools</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Furniture">Furniture</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Location</label>
+                    <select id="location-filter" class="form-select" onchange="performSearch()">
+                        <option value="">All Locations</option>
+                        <option value="San Francisco">San Francisco, CA</option>
+                        <option value="Los Angeles">Los Angeles, CA</option>
+                        <option value="New York">New York, NY</option>
+                        <option value="Seattle">Seattle, WA</option>
+                        <option value="Denver">Denver, CO</option>
+                        <option value="Chicago">Chicago, IL</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Price Range</label>
+                    <select id="price-filter" class="form-select" onchange="performSearch()">
+                        <option value="">Any Price</option>
+                        <option value="0-20">$0 - $20</option>
+                        <option value="20-50">$20 - $50</option>
+                        <option value="50-100">$50 - $100</option>
+                        <option value="100-999">$100+</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" onclick="performSearch()">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Tags -->
+    <section class="filter-section">
+        <div class="container">
+            <div class="filter-tags" id="filter-tags">
+                <!-- Active filters will be displayed here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results-section">
+        <div class="container">
+            <div class="results-header">
+                <div class="results-count" id="results-count">
+                    Showing 6 items
+                </div>
+                <select class="sort-select" id="sort-select" onchange="sortListings()">
+                    <option value="relevance">Sort by Relevance</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="rating">Highest Rated</option>
+                    <option value="newest">Newest First</option>
+                </select>
+            </div>
+
+            <div class="listings-grid" id="listings-grid">
+                <!-- Listings will be populated by JavaScript -->
+            </div>
+
+            <div class="no-results" id="no-results" style="display: none;">
+                <i class="fas fa-search"></i>
+                <h3>No items found</h3>
+                <p>Try adjusting your search criteria or browse all categories.</p>
+                <button class="btn btn-primary" onclick="clearFilters()">Clear Filters</button>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+    <script>
+        let currentListings = [];
+        let filteredListings = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            currentListings = [...dummyListings];
+            filteredListings = [...dummyListings];
+            displayListings(filteredListings);
+            updateResultsCount();
+        });
+
+        function performSearch() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const category = document.getElementById('category-filter').value;
+            const location = document.getElementById('location-filter').value;
+            const priceRange = document.getElementById('price-filter').value;
+
+            filteredListings = currentListings.filter(listing => {
+                let matches = true;
+
+                // Search term filter
+                if (searchTerm && !listing.title.toLowerCase().includes(searchTerm)) {
+                    matches = false;
+                }
+
+                // Category filter
+                if (category && listing.category !== category) {
+                    matches = false;
+                }
+
+                // Location filter
+                if (location && !listing.location.includes(location)) {
+                    matches = false;
+                }
+
+                // Price filter
+                if (priceRange) {
+                    const [minPrice, maxPrice] = priceRange.split('-').map(p => parseInt(p));
+                    if (listing.price < minPrice || (maxPrice && listing.price > maxPrice)) {
+                        matches = false;
+                    }
+                }
+
+                return matches;
+            });
+
+            displayListings(filteredListings);
+            updateResultsCount();
+            updateFilterTags();
+        }
+
+        function displayListings(listings) {
+            const grid = document.getElementById('listings-grid');
+            const noResults = document.getElementById('no-results');
+
+            if (listings.length === 0) {
+                grid.style.display = 'none';
+                noResults.style.display = 'block';
+                return;
+            }
+
+            grid.style.display = 'grid';
+            noResults.style.display = 'none';
+            grid.innerHTML = '';
+
+            listings.forEach(listing => {
+                const card = createListingCard(listing);
+                grid.appendChild(card);
+            });
+        }
+
+        function updateResultsCount() {
+            const count = document.getElementById('results-count');
+            const total = filteredListings.length;
+            count.textContent = `Showing ${total} item${total !== 1 ? 's' : ''}`;
+        }
+
+        function updateFilterTags() {
+            const tagsContainer = document.getElementById('filter-tags');
+            tagsContainer.innerHTML = '';
+
+            const searchTerm = document.getElementById('search-input').value;
+            const category = document.getElementById('category-filter').value;
+            const location = document.getElementById('location-filter').value;
+            const priceRange = document.getElementById('price-filter').value;
+
+            if (searchTerm) {
+                addFilterTag(`Search: "${searchTerm}"`, () => {
+                    document.getElementById('search-input').value = '';
+                    performSearch();
+                });
+            }
+
+            if (category) {
+                addFilterTag(`Category: ${category}`, () => {
+                    document.getElementById('category-filter').value = '';
+                    performSearch();
+                });
+            }
+
+            if (location) {
+                addFilterTag(`Location: ${location}`, () => {
+                    document.getElementById('location-filter').value = '';
+                    performSearch();
+                });
+            }
+
+            if (priceRange) {
+                const [min, max] = priceRange.split('-');
+                const priceText = max ? `$${min} - $${max}` : `$${min}+`;
+                addFilterTag(`Price: ${priceText}`, () => {
+                    document.getElementById('price-filter').value = '';
+                    performSearch();
+                });
+            }
+        }
+
+        function addFilterTag(text, removeCallback) {
+            const tagsContainer = document.getElementById('filter-tags');
+            const tag = document.createElement('div');
+            tag.className = 'filter-tag';
+            tag.innerHTML = `
+                ${text}
+                <i class="fas fa-times" onclick="removeFilterTag(this)"></i>
+            `;
+            tag.querySelector('i').onclick = removeCallback;
+            tagsContainer.appendChild(tag);
+        }
+
+        function clearFilters() {
+            document.getElementById('search-input').value = '';
+            document.getElementById('category-filter').value = '';
+            document.getElementById('location-filter').value = '';
+            document.getElementById('price-filter').value = '';
+            performSearch();
+        }
+
+        function sortListings() {
+            const sortBy = document.getElementById('sort-select').value;
+
+            switch (sortBy) {
+                case 'price-low':
+                    filteredListings.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    filteredListings.sort((a, b) => b.price - a.price);
+                    break;
+                case 'rating':
+                    filteredListings.sort((a, b) => b.rating - a.rating);
+                    break;
+                case 'newest':
+                    filteredListings.sort((a, b) => b.id - a.id);
+                    break;
+                default:
+                    // Keep original order for relevance
+                    break;
+            }
+
+            displayListings(filteredListings);
+        }
+    </script>
+</body>
+</html>
+
+=== post-item.html ===
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List an Item - E-Borrow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <style>
+        .post-header {
+            background: var(--white);
+            padding: 100px 0 2rem;
+            text-align: center;
+        }
+
+        .post-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .form-section {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+            border-bottom: 2px solid var(--gray-light);
+            padding-bottom: 0.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .image-upload {
+            border: 2px dashed var(--gray-medium);
+            border-radius: var(--border-radius-sm);
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .image-upload:hover {
+            border-color: var(--primary);
+            background-color: var(--gray-light);
+        }
+
+        .image-upload.dragover {
+            border-color: var(--primary);
+            background-color: rgba(75, 95, 181, 0.1);
+        }
+
+        .image-upload i {
+            font-size: 3rem;
+            color: var(--gray-dark);
+            margin-bottom: 1rem;
+        }
+
+        .image-upload input {
+            display: none;
+        }
+
+        .image-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .preview-item {
+            position: relative;
+            border-radius: var(--border-radius-sm);
+            overflow: hidden;
+        }
+
+        .preview-item img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+        }
+
+        .preview-item .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(255, 59, 48, 0.8);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .availability-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        @media (max-width: 768px) {
+            .form-row,
+            .pricing-grid,
+            .availability-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .post-container {
+                padding: 1rem;
+            }
+
+            .form-section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <i class="fas fa-exchange-alt"></i>
+                    E-Borrow
+                </a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="search.html" class="nav-link">Browse</a>
+                <a href="post-item.html" class="nav-link">List Item</a>
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="login.html" class="nav-link">Login</a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="post-header">
+        <div class="container">
+            <h1>List Your Item</h1>
+            <p>Share your items with the community and earn money</p>
+        </div>
+    </section>
+
+    <!-- Form Container -->
+    <div class="post-container">
+        <form id="post-item-form" onsubmit="handleSubmit(event)">
+            <!-- Basic Information -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <i class="fas fa-info-circle"></i>
+                    Basic Information
+                </h2>
+                
+                <div class="form-group">
+                    <label class="form-label">Item Title *</label>
+                    <input type="text" class="form-input" required placeholder="e.g., Canon EOS R5 Camera">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Category *</label>
+                        <select class="form-select" required>
+                            <option value="">Select a category</option>
+                            <option value="Photography">Photography</option>
+                            <option value="Vehicles">Vehicles</option>
+                            <option value="Tools">Tools</option>
+                            <option value="Electronics">Electronics</option>
+                            <option value="Sports">Sports</option>
+                            <option value="Furniture">Furniture</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Condition *</label>
+                        <select class="form-select" required>
+                            <option value="">Select condition</option>
+                            <option value="New">New</option>
+                            <option value="Like New">Like New</option>
+                            <option value="Good">Good</option>
+                            <option value="Fair">Fair</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Description *</label>
+                    <textarea class="form-textarea" required placeholder="Describe your item, its features, and any important details..."></textarea>
+                </div>
+            </div>
+
+            <!-- Images -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <i class="fas fa-images"></i>
+                    Photos
+                </h2>
+                
+                <div class="image-upload" onclick="document.getElementById('image-input').click()">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>Upload Photos</h3>
+                    <p>Drag and drop images here or click to browse</p>
+                    <p class="text-small">Maximum 10 images, 5MB each</p>
+                    <input type="file" id="image-input" multiple accept="image/*" onchange="previewImages(this)">
+                </div>
+                
+                <div class="image-preview" id="image-preview">
+                    <!-- Preview images will appear here -->
+                </div>
+            </div>
+
+            <!-- Pricing -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <i class="fas fa-dollar-sign"></i>
+                    Pricing
+                </h2>
+                
+                <div class="pricing-grid">
+                    <div class="form-group">
+                        <label class="form-label">Daily Rate *</label>
+                        <input type="number" class="form-input" required placeholder="25" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Weekly Rate</label>
+                        <input type="number" class="form-input" placeholder="150" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Monthly Rate</label>
+                        <input type="number" class="form-input" placeholder="500" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Security Deposit</label>
+                        <input type="number" class="form-input" placeholder="100" min="0">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Location -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Location
+                </h2>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">City *</label>
+                        <input type="text" class="form-input" required placeholder="San Francisco">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">State *</label>
+                        <select class="form-select" required>
+                            <option value="">Select state</option>
+                            <option value="CA">California</option>
+                            <option value="NY">New York</option>
+                            <option value="TX">Texas</option>
+                            <option value="FL">Florida</option>
+                            <option value="WA">Washington</option>
+                            <option value="CO">Colorado</option>
+                            <option value="IL">Illinois</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="delivery-available">
+                    <label for="delivery-available">I can deliver this item</label>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="pickup-only">
+                    <label for="pickup-only">Pickup only</label>
+                </div>
+            </div>
+
+            <!-- Availability -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <i class="fas fa-calendar-alt"></i>
+                    Availability
+                </h2>
+                
+                <div class="availability-grid">
+                    <div class="form-group">
+                        <label class="form-label">Available From</label>
+                        <input type="date" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Available Until</label>
+                        <input type="date" class="form-input">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Minimum Rental Period</label>
+                    <select class="form-select">
+                        <option value="1">1 day</option>
+                        <option value="2">2 days</option>
+                        <option value="3">3 days</option>
+                        <option value="7">1 week</option>
+                        <option value="30">1 month</option>
+                    </select>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="instant-book">
+                    <label for="instant-book">Allow instant booking (no approval required)</label>
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <button type="button" class="btn btn-outline">Save as Draft</button>
+                <button type="submit" class="btn btn-primary">Publish Listing</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Image upload functionality
+        function previewImages(input) {
+            const preview = document.getElementById('image-preview');
+            preview.innerHTML = '';
+
+            if (input.files) {
+                Array.from(input.files).forEach((file, index) => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const previewItem = document.createElement('div');
+                        previewItem.className = 'preview-item';
+                        previewItem.innerHTML = `
+                            <img src="${e.target.result}" alt="Preview ${index + 1}">
+                            <button type="button" class="remove-btn" onclick="removeImage(this)">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        `;
+                        preview.appendChild(previewItem);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+        }
+
+        function removeImage(button) {
+            button.parentElement.remove();
+        }
+
+        // Drag and drop functionality
+        const imageUpload = document.querySelector('.image-upload');
+        
+        imageUpload.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.classList.add('dragover');
+        });
+
+        imageUpload.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            this.classList.remove('dragover');
+        });
+
+        imageUpload.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            const input = document.getElementById('image-input');
+            input.files = files;
+            previewImages(input);
+        });
+
+        // Form submission
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            if (!validateForm('post-item-form')) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            // Simulate form submission
+            alert('Item listed successfully! Redirecting to your dashboard...');
+            window.location.href = 'dashboard.html';
+        }
+
+        // Auto-calculate weekly and monthly rates
+        document.querySelector('input[placeholder="25"]').addEventListener('input', function() {
+            const dailyRate = parseFloat(this.value) || 0;
+            const weeklyInput = document.querySelector('input[placeholder="150"]');
+            const monthlyInput = document.querySelector('input[placeholder="500"]');
+            
+            if (dailyRate > 0) {
+                weeklyInput.placeholder = Math.round(dailyRate * 6.5);
+                monthlyInput.placeholder = Math.round(dailyRate * 25);
+            }
+        });
+
+        // Check authentication
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = checkAuth();
+            if (!user) {
+                alert('Please log in to list an item.');
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
+</body>
+</html>
+
+=== item-detail.html ===
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item Details - E-Borrow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <style>
+        .detail-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px 2rem;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 3rem;
+        }
+
+        .detail-main {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .image-gallery {
+            position: relative;
+            height: 400px;
+            background: var(--gray-light);
+        }
+
+        .main-image {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+        }
+
+        .main-image i {
+            font-size: 6rem;
+            color: var(--white);
+        }
+
+        .image-nav {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .image-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+        }
+
+        .image-dot.active {
+            background: var(--white);
+        }
+
+        .detail-content {
+            padding: 2rem;
+        }
+
+        .item-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .item-meta {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--gray-dark);
+        }
+
+        .item-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .item-rating i {
+            color: var(--accent);
+        }
+
+        .item-location {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .item-description {
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .item-features {
+            margin-bottom: 2rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            background: var(--gray-light);
+            border-radius: var(--border-radius-sm);
+        }
+
+        .feature-item i {
+            color: var(--primary);
+        }
+
+        .owner-section {
+            border-top: 1px solid var(--gray-medium);
+            padding-top: 2rem;
+        }
+
+        .owner-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .owner-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.5rem;
+        }
+
+        .owner-details h4 {
+            margin-bottom: 0.25rem;
+        }
+
+        .owner-stats {
+            display: flex;
+            gap: 1rem;
+            color: var(--gray-dark);
+            font-size: 0.875rem;
+        }
+
+        .booking-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .price-display {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .price-main {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .price-period {
+            color: var(--gray-dark);
+            font-size: 1rem;
+        }
+
+        .price-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            font-size: 0.875rem;
+            color: var(--gray-dark);
+        }
+
+        .booking-form {
+            margin-bottom: 2rem;
+        }
+
+        .date-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .booking-summary {
+            background: var(--gray-light);
+            padding: 1rem;
+            border-radius: var(--border-radius-sm);
+            margin-bottom: 1rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-total {
+            font-weight: 600;
+            border-top: 1px solid var(--gray-medium);
+            padding-top: 0.5rem;
+        }
+
+        .contact-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .reviews-section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--gray-medium);
+        }
+
+        .review-item {
+            padding: 1.5rem;
+            border: 1px solid var(--gray-medium);
+            border-radius: var(--border-radius-sm);
+            margin-bottom: 1rem;
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .review-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+        }
+
+        .review-meta {
+            flex: 1;
+        }
+
+        .review-rating {
+            color: var(--accent);
+        }
+
+        .review-date {
+            color: var(--gray-dark);
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            .detail-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 80px 15px 2rem;
+            }
+
+            .booking-card {
+                position: static;
+            }
+
+            .date-row {
+                grid-template-columns: 1fr;
+            }
+
+            .item-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <i class="fas fa-exchange-alt"></i>
+                    E-Borrow
+                </a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="search.html" class="nav-link">Browse</a>
+                <a href="post-item.html" class="nav-link">List Item</a>
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="login.html" class="nav-link">Login</a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Detail Container -->
+    <div class="detail-container">
+        <!-- Main Content -->
+        <div class="detail-main">
+            <!-- Image Gallery -->
+            <div class="image-gallery">
+                <div class="main-image" id="main-image">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <div class="image-nav">
+                    <div class="image-dot active"></div>
+                    <div class="image-dot"></div>
+                    <div class="image-dot"></div>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="detail-content">
+                <h1 class="item-title" id="item-title">Canon EOS R5</h1>
+                
+                <div class="item-meta">
+                    <div class="item-rating">
+                        <i class="fas fa-star"></i>
+                        <span id="item-rating">4.9 (23 reviews)</span>
+                    </div>
+                    <div class="item-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span id="item-location">San Francisco, CA</span>
+                    </div>
+                    <div class="item-category">
+                        <i class="fas fa-tag"></i>
+                        <span id="item-category">Photography</span>
+                    </div>
+                </div>
+
+                <div class="item-description" id="item-description">
+                    <p>Professional mirrorless camera perfect for photography and videography. This Canon EOS R5 features a 45MP full-frame sensor, 8K video recording, and advanced autofocus system. Ideal for professional photographers, content creators, and enthusiasts.</p>
+                </div>
+
+                <div class="item-features">
+                    <h3>Features & Specifications</h3>
+                    <div class="features-grid">
+                        <div class="feature-item">
+                            <i class="fas fa-camera"></i>
+                            <span>45MP Full-Frame Sensor</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-video"></i>
+                            <span>8K Video Recording</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-bolt"></i>
+                            <span>20fps Burst Mode</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-wifi"></i>
+                            <span>Built-in WiFi & Bluetooth</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Weather Sealed</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-battery-full"></i>
+                            <span>Extended Battery Life</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Owner Section -->
+                <div class="owner-section">
+                    <h3>Meet Your Host</h3>
+                    <div class="owner-info">
+                        <div class="owner-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="owner-details">
+                            <h4 id="owner-name">John Doe</h4>
+                            <div class="owner-stats">
+                                <span><i class="fas fa-star"></i> 4.9 rating</span>
+                                <span><i class="fas fa-box"></i> 12 items</span>
+                                <span><i class="fas fa-calendar"></i> Joined 2022</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p>Professional photographer with over 10 years of experience. I take great care of my equipment and ensure everything is in perfect condition for renters.</p>
+                </div>
+
+                <!-- Reviews Section -->
+                <div class="reviews-section">
+                    <h3>Reviews (23)</h3>
+                    
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="review-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="review-meta">
+                                <h4>Sarah Wilson</h4>
+                                <div class="review-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="review-date">2 weeks ago</div>
+                            </div>
+                        </div>
+                        <p>Amazing camera! John was very helpful and the equipment was in perfect condition. Highly recommend for any photography project.</p>
+                    </div>
+
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="review-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="review-meta">
+                                <h4>Mike Johnson</h4>
+                                <div class="review-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="review-date">1 month ago</div>
+                            </div>
+                        </div>
+                        <p>Great experience renting from John. The camera worked flawlessly for my wedding shoot. Will definitely rent again!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Booking Card -->
+        <div class="booking-card">
+            <div class="price-display">
+                <div class="price-main" id="price-display">$35</div>
+                <div class="price-period">per day</div>
+            </div>
+
+            <div class="price-options">
+                <div>Weekly: $210 (save $35)</div>
+                <div>Monthly: $875 (save $175)</div>
+            </div>
+
+            <div class="booking-form">
+                <div class="date-row">
+                    <div class="form-group">
+                        <label class="form-label">Start Date</label>
+                        <input type="date" class="form-input" id="start-date">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">End Date</label>
+                        <input type="date" class="form-input" id="end-date">
+                    </div>
+                </div>
+
+                <div class="booking-summary" id="booking-summary" style="display: none;">
+                    <div class="summary-row">
+                        <span>Daily rate × <span id="days-count">0</span> days</span>
+                        <span id="subtotal">$0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Service fee</span>
+                        <span id="service-fee">$0</span>
+                    </div>
+                    <div class="summary-row summary-total">
+                        <span>Total</span>
+                        <span id="total-price">$0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-buttons">
+                <button class="btn btn-primary" onclick="bookItem()">Book Now</button>
+                <button class="btn btn-secondary" onclick="contactOwner()">Message Owner</button>
+            </div>
+
+            <div style="text-align: center; margin-top: 1rem; font-size: 0.875rem; color: var(--gray-dark);">
+                <i class="fas fa-shield-alt"></i>
+                Protected by E-Borrow insurance
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        let currentItem = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadItemDetails();
+            setupDateCalculation();
+        });
+
+        function loadItemDetails() {
+            const itemId = localStorage.getItem('selectedListingId');
+            if (!itemId) {
+                window.location.href = 'search.html';
+                return;
+            }
+
+            currentItem = dummyListings.find(item => item.id == itemId);
+            if (!currentItem) {
+                window.location.href = 'search.html';
+                return;
+            }
+
+            // Update page content
+            document.getElementById('item-title').textContent = currentItem.title;
+            document.getElementById('item-rating').textContent = `${currentItem.rating} (${currentItem.reviews} reviews)`;
+            document.getElementById('item-location').textContent = currentItem.location;
+            document.getElementById('item-category').textContent = currentItem.category;
+            document.getElementById('item-description').innerHTML = `<p>${currentItem.description}</p>`;
+            document.getElementById('owner-name').textContent = currentItem.owner;
+            document.getElementById('price-display').textContent = `$${currentItem.price}`;
+
+            // Update main image icon based on category
+            const categoryIcons = {
+                'Photography': 'fas fa-camera',
+                'Vehicles': 'fas fa-car',
+                'Tools': 'fas fa-tools',
+                'Electronics': 'fas fa-laptop',
+                'Sports': 'fas fa-dumbbell',
+                'Furniture': 'fas fa-couch'
+            };
+
+            const mainImage = document.getElementById('main-image');
+            mainImage.innerHTML = `<i class="${categoryIcons[currentItem.category] || 'fas fa-box'}"></i>`;
+
+            // Set minimum date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('start-date').min = today;
+            document.getElementById('end-date').min = today;
+        }
+
+        function setupDateCalculation() {
+            const startDate = document.getElementById('start-date');
+            const endDate = document.getElementById('end-date');
+
+            startDate.addEventListener('change', function() {
+                endDate.min = this.value;
+                calculateTotal();
+            });
+
+            endDate.addEventListener('change', calculateTotal);
+        }
+
+        function calculateTotal() {
+            const startDate = new Date(document.getElementById('start-date').value);
+            const endDate = new Date(document.getElementById('end-date').value);
+            const summary = document.getElementById('booking-summary');
+
+            if (!startDate || !endDate || endDate <= startDate) {
+                summary.style.display = 'none';
+                return;
+            }
+
+            const days = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+            const dailyRate = currentItem.price;
+            const subtotal = days * dailyRate;
+            const serviceFee = Math.round(subtotal * 0.1); // 10% service fee
+            const total = subtotal + serviceFee;
+
+            document.getElementById('days-count').textContent = days;
+            document.getElementById('subtotal').textContent = `$${subtotal}`;
+            document.getElementById('service-fee').textContent = `$${serviceFee}`;
+            document.getElementById('total-price').textContent = `$${total}`;
+
+            summary.style.display = 'block';
+        }
+
+        function bookItem() {
+            const user = checkAuth();
+            if (!user) {
+                alert('Please log in to book an item.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const startDate = document.getElementById('start-date').value;
+            const endDate = document.getElementById('end-date').value;
+
+            if (!startDate || !endDate) {
+                alert('Please select your rental dates.');
+                return;
+            }
+
+            // Simulate booking
+            alert('Booking request sent! The owner will respond within 24 hours.');
+        }
+
+        function contactOwner() {
+            const user = checkAuth();
+            if (!user) {
+                alert('Please log in to contact the owner.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            alert('Message feature would open a chat interface with the owner.');
+        }
+    </script>
+</body>
+</html>
+
+=== dashboard.html ===
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - E-Borrow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <style>
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px 2rem;
+        }
+
+        .dashboard-header {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.5rem;
+        }
+
+        .user-details h2 {
+            margin-bottom: 0.25rem;
+        }
+
+        .user-stats {
+            display: flex;
+            gap: 2rem;
+            color: var(--gray-dark);
+            font-size: 0.875rem;
+        }
+
+        .dashboard-nav {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .nav-tab {
+            padding: 0.75rem 1.5rem;
+            background: var(--white);
+            border: 2px solid var(--gray-medium);
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-tab.active {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+
+        .nav-tab:hover:not(.active) {
+            border-color: var(--primary);
+        }
+
+        .dashboard-content {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--gray-light);
+            padding: 1.5rem;
+            border-radius: var(--border-radius-sm);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--gray-dark);
+            font-size: 0.875rem;
+        }
+
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .item-card {
+            border: 1px solid var(--gray-medium);
+            border-radius: var(--border-radius-sm);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .item-card:hover {
+            box-shadow: var(--shadow);
+        }
+
+        .item-image {
+            height: 150px;
+            background: var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+        }
+
+        .item-image i {
+            font-size: 2.5rem;
+            color: var(--white);
+        }
+
+        .item-content {
+            padding: 1rem;
+        }
+
+        .item-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+            color: var(--gray-dark);
+        }
+
+        .item-price {
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            flex: 1;
+        }
+
+        .rental-item {
+            border: 1px solid var(--gray-medium);
+            border-radius: var(--border-radius-sm);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .rental-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .rental-info h4 {
+            margin-bottom: 0.25rem;
+        }
+
+        .rental-dates {
+            color: var(--gray-dark);
+            font-size: 0.875rem;
+        }
+
+        .rental-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background: rgba(52, 199, 89, 0.1);
+            color: #34c759;
+        }
+
+        .status-pending {
+            background: rgba(255, 209, 102, 0.1);
+            color: #ffd166;
+        }
+
+        .status-completed {
+            background: rgba(142, 142, 147, 0.1);
+            color: #8e8e93;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--gray-dark);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            color: var(--gray-medium);
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .user-stats {
+                justify-content: center;
+            }
+
+            .dashboard-nav {
+                flex-wrap: wrap;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .items-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .rental-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <i class="fas fa-exchange-alt"></i>
+                    E-Borrow
+                </a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="search.html" class="nav-link">Browse</a>
+                <a href="post-item.html" class="nav-link">List Item</a>
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="#" class="nav-link" onclick="logout()">Logout</a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Header -->
+        <div class="dashboard-header">
+            <div class="user-info">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-details">
+                    <h2 id="user-name">Demo User</h2>
+                    <div class="user-stats">
+                        <span><i class="fas fa-star"></i> 4.9 rating</span>
+                        <span><i class="fas fa-calendar"></i> Member since 2023</span>
+                        <span><i class="fas fa-shield-alt"></i> Verified</span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <a href="post-item.html" class="btn btn-primary">
+                    <i class="fas fa-plus"></i>
+                    List New Item
+                </a>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="dashboard-nav">
+            <div class="nav-tab active" onclick="switchTab('overview')">
+                <i class="fas fa-chart-line"></i>
+                Overview
+            </div>
+            <div class="nav-tab" onclick="switchTab('my-listings')">
+                <i class="fas fa-box"></i>
+                My Listings
+            </div>
+            <div class="nav-tab" onclick="switchTab('my-rentals')">
+                <i class="fas fa-calendar-check"></i>
+                My Rentals
+            </div>
+            <div class="nav-tab" onclick="switchTab('bookings')">
+                <i class="fas fa-handshake"></i>
+                Bookings
+            </div>
+            <div class="nav-tab" onclick="switchTab('messages')">
+                <i class="fas fa-comments"></i>
+                Messages
+            </div>
+            <div class="nav-tab" onclick="switchTab('settings')">
+                <i class="fas fa-cog"></i>
+                Settings
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="dashboard-content">
+            <!-- Overview Section -->
+            <div id="overview" class="content-section active">
+                <h3>Dashboard Overview</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">Active Listings</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">Total Rentals</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">$1,240</div>
+                        <div class="stat-label">Total Earnings</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">4.9</div>
+                        <div class="stat-label">Average Rating</div>
+                    </div>
+                </div>
+
+                <h4>Recent Activity</h4>
+                <div class="rental-item">
+                    <div class="rental-header">
+                        <div class="rental-info">
+                            <h4>Canon EOS R5 rented by Sarah Wilson</h4>
+                            <div class="rental-dates">March 15-18, 2024 • $105 total</div>
+                        </div>
+                        <div class="rental-status status-active">Active</div>
+                    </div>
+                </div>
+
+                <div class="rental-item">
+                    <div class="rental-header">
+                        <div class="rental-info">
+                            <h4>Tesla Model 3 booking request</h4>
+                            <div class="rental-dates">March 20-22, 2024 • $267 total</div>
+                        </div>
+                        <div class="rental-status status-pending">Pending</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- My Listings Section -->
+            <div id="my-listings" class="content-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h3>My Listings (3)</h3>
+                    <a href="post-item.html" class="btn btn-primary">Add New Item</a>
+                </div>
+
+                <div class="items-grid">
+                    <div class="item-card">
+                        <div class="item-image">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <div class="item-content">
+                            <div class="item-title">Canon EOS R5</div>
+                            <div class="item-meta">
+                                <span>Photography</span>
+                                <span class="item-price">$35/day</span>
+                            </div>
+                            <div class="item-actions">
+                                <button class="btn btn-secondary btn-small">Edit</button>
+                                <button class="btn btn-outline btn-small">View</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item-card">
+                        <div class="item-image">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <div class="item-content">
+                            <div class="item-title">DeWalt Drill Set</div>
+                            <div class="item-meta">
+                                <span>Tools</span>
+                                <span class="item-price">$15/day</span>
+                            </div>
+                            <div class="item-actions">
+                                <button class="btn btn-secondary btn-small">Edit</button>
+                                <button class="btn btn-outline btn-small">View</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item-card">
+                        <div class="item-image">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        <div class="item-content">
+                            <div class="item-title">MacBook Pro 16"</div>
+                            <div class="item-meta">
+                                <span>Electronics</span>
+                                <span class="item-price">$45/day</span>
+                            </div>
+                            <div class="item-actions">
+                                <button class="btn btn-secondary btn-small">Edit</button>
+                                <button class="btn btn-outline btn-small">View</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- My Rentals Section -->
+            <div id="my-rentals" class="content-section">
+                <h3>My Rentals</h3>
+                
+                <div class="rental-item">
+                    <div class="rental-header">
+                        <div class="rental-info">
+                            <h4>Mountain Bike from Tom Brown</h4>
+                            <div class="rental-dates">March 10-12, 2024 • $75 total</div>
+                        </div>
+                        <div class="rental-status status-completed">Completed</div>
+                    </div>
+                    <p>Great bike for trail riding. Owner was very helpful and responsive.</p>
+                </div>
+
+                <div class="rental-item">
+                    <div class="rental-header">
+                        <div class="rental-info">
+                            <h4>Dining Table Set from Lisa Davis</h4>
+                            <div class="rental-dates">March 5-7, 2024 • $90 total</div>
+                        </div>
+                        <div class="rental-status status-completed">Completed</div>
+                    </div>
+                    <p>Perfect for our dinner party. Beautiful table and chairs in excellent condition.</p>
+                </div>
+            </div>
+
+            <!-- Bookings Section -->
+            <div id="bookings" class="content-section">
+                <h3>Booking Requests</h3>
+                
+                <div class="rental-item">
+                    <div class="rental-header">
+                        <div class="rental-info">
+                            <h4>Canon EOS R5 requested by Mike Johnson</h4>
+                            <div class="rental-dates">March 25-27, 2024 • $105 total</div>
+                        </div>
+                        <div class="rental-status status-pending">Pending</div>
+                    </div>
+                    <p>Professional photographer needs camera for wedding shoot.</p>
+                    <div style="margin-top: 1rem;">
+                        <button class="btn btn-primary btn-small" style="margin-right: 0.5rem;">Accept</button>
+                        <button class="btn btn-outline btn-small">Decline</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Messages Section -->
+            <div id="messages" class="content-section">
+                <div class="empty-state">
+                    <i class="fas fa-comments"></i>
+                    <h3>No Messages</h3>
+                    <p>Your conversations with other users will appear here.</p>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div id="settings" class="content-section">
+                <h3>Account Settings</h3>
+                
+                <div class="form-section">
+                    <h4>Profile Information</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">First Name</label>
+                            <input type="text" class="form-input" value="Demo">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Last Name</label>
+                            <input type="text" class="form-input" value="User">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" value="demo@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" class="form-input" placeholder="(555) 123-4567">
+                    </div>
+                    <button class="btn btn-primary">Save Changes</button>
+                </div>
+
+                <div class="form-section" style="margin-top: 2rem;">
+                    <h4>Notification Preferences</h4>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="email-bookings" checked>
+                        <label for="email-bookings">Email notifications for new bookings</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="email-messages" checked>
+                        <label for="email-messages">Email notifications for messages</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="sms-reminders">
+                        <label for="sms-reminders">SMS reminders for upcoming rentals</label>
+                    </div>
+                    <button class="btn btn-primary">Save Preferences</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication
+            const user = checkAuth();
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Update user name
+            document.getElementById('user-name').textContent = user.name;
+        });
+
+        function switchTab(tabName) {
+            // Remove active class from all tabs and sections
+            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
+
+            // Add active class to clicked tab and corresponding section
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+    </script>
+</body>
+</html>
+
+=== admin.html ===
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - E-Borrow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <style>
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 100px 20px 2rem;
+        }
+
+        .admin-header {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .admin-title i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .admin-nav {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .admin-content {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .metric-change {
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            opacity: 0.8;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-medium);
+        }
+
+        .data-table th {
+            background: var(--gray-light);
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .data-table tr:hover {
+            background: var(--gray-light);
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background: rgba(52, 199, 89, 0.1);
+            color: #34c759;
+        }
+
+        .status-pending {
+            background: rgba(255, 209, 102, 0.1);
+            color: #ffd166;
+        }
+
+        .status-suspended {
+            background: rgba(255, 59, 48, 0.1);
+            color: #ff3b30;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-icon {
+            padding: 0.5rem;
+            border: none;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-edit {
+            background: var(--secondary);
+            color: var(--white);
+        }
+
+        .btn-delete {
+            background: #ff3b30;
+            color: var(--white);
+        }
+
+        .btn-view {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .search-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-input {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .chart-container {
+            height: 300px;
+            background: var(--gray-light);
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 2rem 0;
+            color: var(--gray-dark);
+        }
+
+        @media (max-width: 768px) {
+            .admin-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .search-filters {
+                flex-direction: column;
+            }
+
+            .data-table {
+                font-size: 0.875rem;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <i class="fas fa-exchange-alt"></i>
+                    E-Borrow
+                </a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="search.html" class="nav-link">Browse</a>
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="admin.html" class="nav-link">Admin</a>
+                <a href="#" class="nav-link" onclick="logout()">Logout</a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Admin Container -->
+    <div class="admin-container">
+        <!-- Header -->
+        <div class="admin-header">
+            <div class="admin-title">
+                <i class="fas fa-shield-alt"></i>
+                <div>
+                    <h1>Admin Dashboard</h1>
+                    <p>Manage users, listings, and platform analytics</p>
+                </div>
+            </div>
+            <div>
+                <button class="btn btn-primary">
+                    <i class="fas fa-download"></i>
+                    Export Data
+                </button>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="admin-nav">
+            <div class="nav-tab active" onclick="switchAdminTab('analytics')">
+                <i class="fas fa-chart-bar"></i>
+                Analytics
+            </div>
+            <div class="nav-tab" onclick="switchAdminTab('users')">
+                <i class="fas fa-users"></i>
+                Users
+            </div>
+            <div class="nav-tab" onclick="switchAdminTab('listings')">
+                <i class="fas fa-box"></i>
+                Listings
+            </div>
+            <div class="nav-tab" onclick="switchAdminTab('transactions')">
+                <i class="fas fa-credit-card"></i>
+                Transactions
+            </div>
+            <div class="nav-tab" onclick="switchAdminTab('reports')">
+                <i class="fas fa-flag"></i>
+                Reports
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="admin-content">
+            <!-- Analytics Section -->
+            <div id="analytics" class="content-section active">
+                <h3>Platform Analytics</h3>
+                
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">2,847</div>
+                        <div class="metric-label">Total Users</div>
+                        <div class="metric-change">+12% this month</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">1,234</div>
+                        <div class="metric-label">Active Listings</div>
+                        <div class="metric-change">+8% this month</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">$45,678</div>
+                        <div class="metric-label">Monthly Revenue</div>
+                        <div class="metric-change">+15% this month</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">567</div>
+                        <div class="metric-label">Transactions</div>
+                        <div class="metric-change">+22% this month</div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div>
+                        <i class="fas fa-chart-line" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                        <p>Revenue Chart Placeholder</p>
+                        <p style="font-size: 0.875rem;">Chart.js or similar library would be integrated here</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Users Section -->
+            <div id="users" class="content-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h3>User Management</h3>
+                    <button class="btn btn-primary">Add User</button>
+                </div>
+
+                <div class="search-filters">
+                    <input type="text" class="form-input filter-input" placeholder="Search users...">
+                    <select class="form-select">
+                        <option>All Status</option>
+                        <option>Active</option>
+                        <option>Suspended</option>
+                    </select>
+                    <select class="form-select">
+                        <option>All Roles</option>
+                        <option>User</option>
+                        <option>Admin</option>
+                    </select>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Email</th>
+                            <th>Join Date</th>
+                            <th>Listings</th>
+                            <th>Rating</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <div style="width: 30px; height: 30px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem;">JD</div>
+                                    John Doe
+                                </div>
+                            </td>
+                            <td>john@example.com</td>
+                            <td>Jan 15, 2023</td>
+                            <td>3</td>
+                            <td>4.9</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-icon btn-view"><i class="fas fa-eye"></i></button>
+                                    <button class="btn-icon btn-edit"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-icon btn-delete"><i class="fas fa-ban"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <div style="width: 30px; height: 30px; border-radius: 50%; background: var(--secondary); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem;">SW</div>
+                                    Sarah Wilson
+                                </div>
+                            </td>
+                            <td>sarah@example.com</td>
+                            <td>Feb 3, 2023</td>
+                            <td>1</td>
+                            <td>4.8</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-icon btn-view"><i class="fas fa-eye"></i></button>
+                                    <button class="btn-icon btn-edit"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-icon btn-delete"><i class="fas fa-ban"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <div style="width: 30px; height: 30px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; color: var(--text); font-size: 0.75rem;">MJ</div>
+                                    Mike Johnson
+                                </div>
+                            </td>
+                            <td>mike@example.com</td>
+                            <td>Mar 10, 2023</td>
+                            <td>2</td>
+                            <td>4.7</td>
+                            <td><span class="status-badge status-suspended">Suspended</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-icon btn-view"><i class="fas fa-eye"></i></button>
+                                    <button class="btn-icon btn-edit"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-icon btn-delete"><i class="fas fa-ban"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Listings Section -->
+            <div id="listings" class="content-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h3>Listing Management</h3>
+                    <button class="btn btn-primary">Featured Listings</button>
+                </div>
+
+                <div class="search-filters">
+                    <input type="text" class="form-input filter-input" placeholder="Search listings...">
+                    <select class="form-select">
+                        <option>All Categories</option>
+                        <option>Photography</option>
+                        <option>Vehicles</option>
+                        <option>Tools</option>
+                        <option>Electronics</option>
+                    </select>
+                    <select class="form-select">
+                        <option>All Status</option>
+                        <option>Active</option>
+                        <option>Pending</option>
+                        <option>Suspended</option>
+                    </select>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Owner</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Views</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Canon EOS R5</td>
+                            <td>John Doe</td>
+                            <td>Photography</td>
+                            <td>$35/day</td>
+                            <td>234</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-icon btn-view"><i class="fas fa-eye"></i></button>
+                                    <button class="btn-icon btn-edit"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-icon btn-delete"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Tesla Model 3</td>
+                            <td>Jane Smith</td>
+                            <td>Vehicles</td>
+                            <td>$89/day</td>
+                            <td>456</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-icon btn-view"><i class="fas fa-eye"></i></button>
+                                    <button class="btn-icon btn-edit"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-icon btn-delete"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>DeWalt Drill Set</td>
+                            <td>Mike Johnson</td>
+                            <td>Tools</td>
+                            <td>$15/day</td>
+                            <td>123</td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-icon btn-view"><i class="fas fa-eye"></i></button>
+                                    <button class="btn-icon btn-edit"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-icon btn-delete"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Transactions Section -->
+            <div id="transactions" class="content-section">
+                <h3>Transaction History</h3>
+
+                <div class="search-filters">
+                    <input type="text" class="form-input filter-input" placeholder="Search transactions...">
+                    <input type="date" class="form-input">
+                    <input type="date" class="form-input">
+                    <select class="form-select">
+                        <option>All Types</option>
+                        <option>Rental</option>
+                        <option>Refund</option>
+                        <option>Payout</option>
+                    </select>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Transaction ID</th>
+                            <th>Date</th>
+                            <th>Item</th>
+                            <th>Renter</th>
+                            <th>Owner</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#TXN-001</td>
+                            <td>Mar 15, 2024</td>
+                            <td>Canon EOS R5</td>
+                            <td>Sarah Wilson</td>
+                            <td>John Doe</td>
+                            <td>$105.00</td>
+                            <td><span class="status-badge status-active">Completed</span></td>
+                        </tr>
+                        <tr>
+                            <td>#TXN-002</td>
+                            <td>Mar 14, 2024</td>
+                            <td>Tesla Model 3</td>
+                            <td>Mike Johnson</td>
+                            <td>Jane Smith</td>
+                            <td>$267.00</td>
+                            <td><span class="status-badge status-pending">Processing</span></td>
+                        </tr>
+                        <tr>
+                            <td>#TXN-003</td>
+                            <td>Mar 13, 2024</td>
+                            <td>Mountain Bike</td>
+                            <td>Demo User</td>
+                            <td>Tom Brown</td>
+                            <td>$75.00</td>
+                            <td><span class="status-badge status-active">Completed</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Reports Section -->
+            <div id="reports" class="content-section">
+                <h3>Reports & Issues</h3>
+
+                <div class="search-filters">
+                    <input type="text" class="form-input filter-input" placeholder="Search reports...">
+                    <select class="form-select">
+                        <option>All Types</option>
+                        <option>User Report</option>
+                        <option>Listing Report</option>
+                        <option>Transaction Issue</option>
+                    </select>
+                    <select class="form-select">
+                        <option>All Status</option>
+                        <option>Open</option>
+                        <option>In Progress</option>
+                        <option>Resolved</option>
+                    </select>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Report ID</th>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Reporter</th>
+                            <th>Subject</th>
+                            <th>Priority</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#RPT-001</td>
+                            <td>Mar 16, 2024</td>
+                            <td>User Report</td>
+                            <td>Sarah Wilson</td>
+                            <td>Inappropriate behavior</td>
+                            <td>High</td>
+                            <td><span class="status-badge status-pending">Open</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-icon btn-view"><i class="fas fa-eye"></i></button>
+                                    <button class="btn-icon btn-edit"><i class="fas fa-edit"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#RPT-002</td>
+                            <td>Mar 15, 2024</td>
+                            <td>Listing Report</td>
+                            <td>Mike Johnson</td>
+                            <td>Misleading description</td>
+                            <td>Medium</td>
+                            <td><span class="status-badge status-active">Resolved</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-icon btn-view"><i class="fas fa-eye"></i></button>
+                                    <button class="btn-icon btn-edit"><i class="fas fa-edit"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function switchAdminTab(tabName) {
+            // Remove active class from all tabs and sections
+            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
+
+            // Add active class to clicked tab and corresponding section
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        // Simulate admin authentication check
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = checkAuth();
+            if (!user) {
+                alert('Admin access required. Redirecting to login...');
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // In a real app, you'd check if user has admin privileges
+            console.log('Admin dashboard loaded for:', user.name);
+        });
+    </script>
+</body>
+</html>
+
+=== styles.css ===
+/* CSS Variables for Brand Colors */
+:root {
+    --primary: #4B5FB5;
+    --secondary: #8FCBF2;
+    --accent: #FFD166;
+    --text: #2F2F2F;
+    --background: #F9F9F9;
+    --white: #FFFFFF;
+    --gray-light: #F5F5F5;
+    --gray-medium: #E5E5E5;
+    --gray-dark: #666666;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+    --border-radius: 12px;
+    --border-radius-sm: 8px;
+    --transition: all 0.3s ease;
+}
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: var(--text);
+    background-color: var(--background);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--text);
+}
+
+.text-accent {
+    color: var(--accent);
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: var(--border-radius-sm);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background-color: #3a4a94;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-secondary {
+    background-color: var(--secondary);
+    color: var(--white);
+}
+
+.btn-secondary:hover {
+    background-color: #7bb8e8;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-accent {
+    background-color: var(--accent);
+    color: var(--text);
+}
+
+.btn-accent:hover {
+    background-color: #ffcc4d;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Navigation */
+.navbar {
+    background-color: var(--white);
+    box-shadow: var(--shadow);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+}
+
+.nav-logo a {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-link {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.nav-link:hover {
+    color: var(--primary);
+}
+
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.bar {
+    width: 25px;
+    height: 3px;
+    background-color: var(--text);
+    margin: 3px 0;
+    transition: var(--transition);
+}
+
+/* Hero Section */
+.hero {
+    padding: 120px 0 80px;
+    background: linear-gradient(135deg, var(--background) 0%, #e8f4fd 100%);
+}
+
+.hero-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--gray-dark);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.hero-image {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    position: relative;
+}
+
+.hero-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    text-align: center;
+    transition: var(--transition);
+}
+
+.hero-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.hero-card:nth-child(3) {
+    grid-column: span 2;
+}
+
+.hero-card i {
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.hero-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.hero-card p {
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* How It Works */
+.how-it-works {
+    padding: 80px 0;
+    background-color: var(--white);
+}
+
+.steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+}
+
+.step {
+    text-align: center;
+    padding: 2rem;
+}
+
+.step-icon {
+    width: 80px;
+    height: 80px;
+    background-color: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+}
+
+.step-icon i {
+    font-size: 2rem;
+    color: var(--white);
+}
+
+.step h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text);
+}
+
+.step p {
+    color: var(--gray-dark);
+    line-height: 1.6;
+}
+
+/* Categories */
+.categories {
+    padding: 80px 0;
+    background-color: var(--background);
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.category-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    text-align: center;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.category-card i {
+    font-size: 3rem;
+    color: var(--secondary);
+    margin-bottom: 1rem;
+}
+
+.category-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.category-card p {
+    color: var(--gray-dark);
+}
+
+/* Featured Listings */
+.featured {
+    padding: 80px 0;
+    background-color: var(--white);
+}
+
+.listings-carousel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.listing-card {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.listing-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.listing-image {
+    height: 200px;
+    background-color: var(--gray-light);
+    position: relative;
+}
+
+.placeholder-image {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--secondary), var(--primary));
+}
+
+.placeholder-image i {
+    font-size: 3rem;
+    color: var(--white);
+}
+
+.listing-content {
+    padding: 1.5rem;
+}
+
+.listing-content h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.listing-location {
+    color: var(--gray-dark);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.listing-price {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+}
+
+.listing-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--gray-dark);
+}
+
+.listing-rating i {
+    color: var(--accent);
+}
+
+/* Trust Section */
+.trust {
+    padding: 80px 0;
+    background-color: var(--background);
+}
+
+.trust-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+}
+
+.trust-feature {
+    text-align: center;
+    padding: 2rem;
+}
+
+.trust-icon {
+    width: 80px;
+    height: 80px;
+    background-color: var(--accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+}
+
+.trust-icon i {
+    font-size: 2rem;
+    color: var(--text);
+}
+
+.trust-feature h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.trust-feature p {
+    color: var(--gray-dark);
+    line-height: 1.6;
+}
+
+/* Footer */
+.footer {
+    background-color: var(--text);
+    color: var(--white);
+    padding: 60px 0 20px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.footer-logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-section h4 {
+    margin-bottom: 1rem;
+    color: var(--accent);
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-section ul li a {
+    color: var(--white);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.footer-section ul li a:hover {
+    color: var(--accent);
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.social-links a {
+    width: 40px;
+    height: 40px;
+    background-color: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.social-links a:hover {
+    background-color: var(--accent);
+    color: var(--text);
+}
+
+.footer-bottom {
+    border-top: 1px solid var(--gray-dark);
+    padding-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.footer-links a {
+    color: var(--white);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.footer-links a:hover {
+    color: var(--accent);
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text);
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--gray-medium);
+    border-radius: var(--border-radius-sm);
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(75, 95, 181, 0.1);
+}
+
+.form-select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--gray-medium);
+    border-radius: var(--border-radius-sm);
+    font-size: 1rem;
+    background-color: var(--white);
+    transition: var(--transition);
+}
+
+.form-select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(75, 95, 181, 0.1);
+}
+
+.form-textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--gray-medium);
+    border-radius: var(--border-radius-sm);
+    font-size: 1rem;
+    resize: vertical;
+    min-height: 120px;
+    font-family: inherit;
+    transition: var(--transition);
+}
+
+.form-textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(75, 95, 181, 0.1);
+}
+
+/* Card Styles */
+.card {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.card-header {
+    border-bottom: 1px solid var(--gray-medium);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-menu {
+        position: fixed;
+        left: -100%;
+        top: 70px;
+        flex-direction: column;
+        background-color: var(--white);
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: var(--shadow);
+        padding: 2rem 0;
+    }
+
+    .nav-menu.active {
+        left: 0;
+    }
+
+    .nav-toggle {
+        display: flex;
+    }
+
+    .hero-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .footer-links {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .category-grid,
+    .listings-carousel,
+    .trust-features {
+        grid-template-columns: 1fr;
+    }
+}
+
+=== script.js ===
+// Mobile Navigation Toggle
+document.addEventListener('DOMContentLoaded', function() {
+    const navToggle = document.getElementById('nav-toggle');
+    const navMenu = document.getElementById('nav-menu');
+
+    if (navToggle && navMenu) {
+        navToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+    }
+
+    // Smooth scrolling for anchor links
+    const anchorLinks = document.querySelectorAll('a[href^="#"]');
+    anchorLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Add scroll effect to navbar
+    window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 50) {
+            navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+            navbar.style.backdropFilter = 'blur(10px)';
+        } else {
+            navbar.style.backgroundColor = '#FFFFFF';
+            navbar.style.backdropFilter = 'none';
+        }
+    });
+});
+
+// Form validation and handling
+function validateForm(formId) {
+    const form = document.getElementById(formId);
+    if (!form) return false;
+
+    const inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
+    let isValid = true;
+
+    inputs.forEach(input => {
+        if (!input.value.trim()) {
+            input.style.borderColor = '#ff3b30';
+            isValid = false;
+        } else {
+            input.style.borderColor = '#E5E5E5';
+        }
+    });
+
+    return isValid;
+}
+
+// Search functionality
+function performSearch() {
+    const searchInput = document.getElementById('search-input');
+    const categoryFilter = document.getElementById('category-filter');
+    const locationFilter = document.getElementById('location-filter');
+    const priceFilter = document.getElementById('price-filter');
+
+    if (searchInput) {
+        const searchTerm = searchInput.value.toLowerCase();
+        const category = categoryFilter ? categoryFilter.value : '';
+        const location = locationFilter ? locationFilter.value : '';
+        const price = priceFilter ? priceFilter.value : '';
+
+        // Filter listings based on search criteria
+        filterListings(searchTerm, category, location, price);
+    }
+}
+
+function filterListings(searchTerm, category, location, price) {
+    const listings = document.querySelectorAll('.listing-card');
+    
+    listings.forEach(listing => {
+        const title = listing.querySelector('h3').textContent.toLowerCase();
+        const listingLocation = listing.querySelector('.listing-location').textContent.toLowerCase();
+        const listingPrice = listing.querySelector('.listing-price').textContent;
+        
+        let showListing = true;
+
+        // Search term filter
+        if (searchTerm && !title.includes(searchTerm)) {
+            showListing = false;
+        }
+
+        // Location filter
+        if (location && !listingLocation.includes(location.toLowerCase())) {
+            showListing = false;
+        }
+
+        // Price filter (simplified)
+        if (price) {
+            const priceValue = parseInt(listingPrice.replace(/[^0-9]/g, ''));
+            const [minPrice, maxPrice] = price.split('-').map(p => parseInt(p));
+            if (priceValue < minPrice || (maxPrice && priceValue > maxPrice)) {
+                showListing = false;
+            }
+        }
+
+        listing.style.display = showListing ? 'block' : 'none';
+    });
+}
+
+// Image upload preview
+function previewImages(input) {
+    const preview = document.getElementById('image-preview');
+    if (!preview) return;
+
+    preview.innerHTML = '';
+
+    if (input.files) {
+        Array.from(input.files).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.width = '100px';
+                img.style.height = '100px';
+                img.style.objectFit = 'cover';
+                img.style.borderRadius = '8px';
+                img.style.margin = '5px';
+                preview.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+}
+
+// Dummy data for demo purposes
+const dummyListings = [
+    {
+        id: 1,
+        title: "Canon EOS R5",
+        category: "Photography",
+        location: "San Francisco, CA",
+        price: 35,
+        rating: 4.9,
+        reviews: 23,
+        owner: "John Doe",
+        description: "Professional mirrorless camera perfect for photography and videography. Features 45MP full-frame sensor, 8K video recording, and advanced autofocus system."
+    },
+    {
+        id: 2,
+        title: "Tesla Model 3",
+        category: "Vehicles",
+        location: "Los Angeles, CA",
+        price: 89,
+        rating: 4.8,
+        reviews: 45,
+        owner: "Jane Smith",
+        description: "Electric vehicle with autopilot features and long range. Perfect for city driving and road trips."
+    },
+    {
+        id: 3,
+        title: "DeWalt Drill Set",
+        category: "Tools",
+        location: "New York, NY",
+        price: 15,
+        rating: 4.7,
+        reviews: 12,
+        owner: "Mike Johnson",
+        description: "Complete drill set with various bits and accessories. Includes cordless drill, impact driver, and carrying case."
+    },
+    {
+        id: 4,
+        title: "MacBook Pro 16\"",
+        category: "Electronics",
+        location: "Seattle, WA",
+        price: 45,
+        rating: 4.9,
+        reviews: 31,
+        owner: "Sarah Wilson",
+        description: "High-performance laptop for creative professionals. M1 Pro chip, 32GB RAM, 1TB SSD."
+    },
+    {
+        id: 5,
+        title: "Mountain Bike",
+        category: "Sports",
+        location: "Denver, CO",
+        price: 25,
+        rating: 4.6,
+        reviews: 18,
+        owner: "Tom Brown",
+        description: "Full suspension mountain bike perfect for trails. 29-inch wheels, 21-speed transmission."
+    },
+    {
+        id: 6,
+        title: "Dining Table Set",
+        category: "Furniture",
+        location: "Chicago, IL",
+        price: 30,
+        rating: 4.8,
+        reviews: 9,
+        owner: "Lisa Davis",
+        description: "Beautiful wooden dining table with 6 chairs. Perfect for dinner parties and events."
+    },
+    {
+        id: 7,
+        title: "Sony A7 III",
+        category: "Photography",
+        location: "San Francisco, CA",
+        price: 28,
+        rating: 4.8,
+        reviews: 15,
+        owner: "Alex Chen",
+        description: "Full-frame mirrorless camera with excellent low-light performance."
+    },
+    {
+        id: 8,
+        title: "BMW X3",
+        category: "Vehicles",
+        location: "Los Angeles, CA",
+        price: 75,
+        rating: 4.7,
+        reviews: 22,
+        owner: "Maria Garcia",
+        description: "Luxury SUV perfect for weekend getaways and family trips."
+    },
+    {
+        id: 9,
+        title: "Gaming Setup",
+        category: "Electronics",
+        location: "Austin, TX",
+        price: 40,
+        rating: 4.9,
+        reviews: 28,
+        owner: "David Kim",
+        description: "Complete gaming setup with high-end PC, monitor, and peripherals."
+    },
+    {
+        id: 10,
+        title: "Kayak",
+        category: "Sports",
+        location: "Portland, OR",
+        price: 20,
+        rating: 4.6,
+        reviews: 11,
+        owner: "Emma Johnson",
+        description: "Single-person kayak perfect for lake and river adventures."
+    }
+];
+
+// Load dummy data into listings
+function loadDummyListings() {
+    const listingsContainer = document.querySelector('.listings-grid, .listings-carousel');
+    if (!listingsContainer) return;
+
+    listingsContainer.innerHTML = '';
+
+    dummyListings.forEach(listing => {
+        const listingCard = createListingCard(listing);
+        listingsContainer.appendChild(listingCard);
+    });
+}
+
+function createListingCard(listing) {
+    const card = document.createElement('div');
+    card.className = 'listing-card';
+    card.onclick = () => viewListing(listing.id);
+
+    const categoryIcons = {
+        'Photography': 'fas fa-camera',
+        'Vehicles': 'fas fa-car',
+        'Tools': 'fas fa-tools',
+        'Electronics': 'fas fa-laptop',
+        'Sports': 'fas fa-dumbbell',
+        'Furniture': 'fas fa-couch'
+    };
+
+    card.innerHTML = `
+        <div class="listing-image">
+            <div class="placeholder-image">
+                <i class="${categoryIcons[listing.category] || 'fas fa-box'}"></i>
+            </div>
+        </div>
+        <div class="listing-content">
+            <h3>${listing.title}</h3>
+            <p class="listing-location"><i class="fas fa-map-marker-alt"></i> ${listing.location}</p>
+            <p class="listing-price">$${listing.price}/day</p>
+            <div class="listing-rating">
+                <i class="fas fa-star"></i>
+                <span>${listing.rating} (${listing.reviews} reviews)</span>
+            </div>
+        </div>
+    `;
+
+    return card;
+}
+
+function viewListing(id) {
+    // Store listing ID and redirect to detail page
+    localStorage.setItem('selectedListingId', id);
+    window.location.href = 'item-detail.html';
+}
+
+// Initialize dummy data on page load
+document.addEventListener('DOMContentLoaded', function() {
+    loadDummyListings();
+});
+
+// Google Sign-In simulation
+function signInWithGoogle() {
+    alert('Google Sign-In would be implemented here with actual Google OAuth');
+    // Simulate successful login
+    localStorage.setItem('user', JSON.stringify({
+        name: 'Demo User',
+        email: 'demo@example.com',
+        avatar: 'https://via.placeholder.com/40'
+    }));
+    window.location.href = 'dashboard.html';
+}
+
+// Logout function
+function logout() {
+    localStorage.removeItem('user');
+    window.location.href = 'index.html';
+}
+
+// Check if user is logged in
+function checkAuth() {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
+}
+
+// Update navigation based on auth status
+function updateNavigation() {
+    const user = checkAuth();
+    const loginLink = document.querySelector('a[href="login.html"]');
+    
+    if (user && loginLink) {
+        loginLink.textContent = user.name;
+        loginLink.href = 'dashboard.html';
+    }
+}
+
+=== server.py ===
+import http.server
+import socketserver
+import os
+
+PORT = 12001  # Using port 12001 for E-Borrow
+
+class CORSHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
+    def end_headers(self):
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        self.send_header('X-Frame-Options', 'ALLOWALL')
+        super().end_headers()
+
+    def do_GET(self):
+        # Serve index.html for root path
+        if self.path == '/':
+            self.path = '/index.html'
+        return super().do_GET()
+
+Handler = CORSHTTPRequestHandler
+
+with socketserver.TCPServer(("0.0.0.0", PORT), Handler) as httpd:
+    print(f"E-Borrow server running at http://0.0.0.0:{PORT}")
+    print(f"Access the website at https://work-2-ktgelzsfqhtmxoqe.prod-runtime.all-hands.dev")
+    print("\nAvailable pages:")
+    print("- Homepage: /")
+    print("- Login/Register: /login.html")
+    print("- Browse Items: /search.html")
+    print("- Post Item: /post-item.html")
+    print("- Item Details: /item-detail.html")
+    print("- User Dashboard: /dashboard.html")
+    print("- Admin Dashboard: /admin.html")
+    httpd.serve_forever()
+

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Borrow - Rent Anything, Anytime</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <i class="fas fa-exchange-alt"></i>
+                    E-Borrow
+                </a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="search.html" class="nav-link">Browse</a>
+                <a href="post-item.html" class="nav-link">List Item</a>
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="login.html" class="nav-link">Login</a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Rent Anything, <span class="text-accent">Anytime</span></h1>
+                <p class="hero-subtitle">Join the peer-to-peer rental revolution. List your items or find what you need from trusted neighbors.</p>
+                <div class="hero-buttons">
+                    <a href="post-item.html" class="btn btn-primary">Post Item</a>
+                    <a href="search.html" class="btn btn-secondary">Browse Items</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-card">
+                    <i class="fas fa-camera"></i>
+                    <h3>Camera</h3>
+                    <p>$25/day</p>
+                </div>
+                <div class="hero-card">
+                    <i class="fas fa-car"></i>
+                    <h3>Car</h3>
+                    <p>$45/day</p>
+                </div>
+                <div class="hero-card">
+                    <i class="fas fa-tools"></i>
+                    <h3>Tools</h3>
+                    <p>$15/day</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>1. Search & Discover</h3>
+                    <p>Browse thousands of items available for rent in your area. From cameras to cars, find exactly what you need.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>2. Connect & Book</h3>
+                    <p>Message the owner, agree on terms, and book your rental. Our secure platform handles payments and insurance.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>3. Enjoy & Review</h3>
+                    <p>Pick up your item, enjoy your rental, and leave a review. Build trust in our community of borrowers and lenders.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title">Popular Categories</h2>
+            <div class="category-grid">
+                <div class="category-card">
+                    <i class="fas fa-camera"></i>
+                    <h3>Photography</h3>
+                    <p>Cameras, lenses, lighting</p>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-car"></i>
+                    <h3>Vehicles</h3>
+                    <p>Cars, bikes, scooters</p>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-tools"></i>
+                    <h3>Tools</h3>
+                    <p>Power tools, equipment</p>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-couch"></i>
+                    <h3>Furniture</h3>
+                    <p>Tables, chairs, decor</p>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-gamepad"></i>
+                    <h3>Electronics</h3>
+                    <p>Gaming, audio, tech</p>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-dumbbell"></i>
+                    <h3>Sports</h3>
+                    <p>Equipment, gear, bikes</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Listings -->
+    <section class="featured">
+        <div class="container">
+            <h2 class="section-title">Featured Listings</h2>
+            <div class="listings-carousel">
+                <div class="listing-card">
+                    <div class="listing-image">
+                        <div class="placeholder-image">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                    </div>
+                    <div class="listing-content">
+                        <h3>Canon EOS R5</h3>
+                        <p class="listing-location"><i class="fas fa-map-marker-alt"></i> San Francisco, CA</p>
+                        <p class="listing-price">$35/day</p>
+                        <div class="listing-rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.9 (23 reviews)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="listing-card">
+                    <div class="listing-image">
+                        <div class="placeholder-image">
+                            <i class="fas fa-car"></i>
+                        </div>
+                    </div>
+                    <div class="listing-content">
+                        <h3>Tesla Model 3</h3>
+                        <p class="listing-location"><i class="fas fa-map-marker-alt"></i> Los Angeles, CA</p>
+                        <p class="listing-price">$89/day</p>
+                        <div class="listing-rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.8 (45 reviews)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="listing-card">
+                    <div class="listing-image">
+                        <div class="placeholder-image">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                    </div>
+                    <div class="listing-content">
+                        <h3>DeWalt Drill Set</h3>
+                        <p class="listing-location"><i class="fas fa-map-marker-alt"></i> New York, NY</p>
+                        <p class="listing-price">$15/day</p>
+                        <div class="listing-rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.7 (12 reviews)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="trust">
+        <div class="container">
+            <h2 class="section-title">Why Choose E-Borrow?</h2>
+            <div class="trust-features">
+                <div class="trust-feature">
+                    <div class="trust-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Secure & Insured</h3>
+                    <p>All rentals are covered by our comprehensive insurance policy. Your items and transactions are protected.</p>
+                </div>
+                <div class="trust-feature">
+                    <div class="trust-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Verified Community</h3>
+                    <p>All users are verified through ID checks and reviews. Build trust with our community-driven rating system.</p>
+                </div>
+                <div class="trust-feature">
+                    <div class="trust-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>24/7 Support</h3>
+                    <p>Our customer support team is available around the clock to help with any questions or issues.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-exchange-alt"></i>
+                        E-Borrow
+                    </div>
+                    <p>The peer-to-peer rental platform that connects neighbors and builds community.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Platform</h4>
+                    <ul>
+                        <li><a href="search.html">Browse Items</a></li>
+                        <li><a href="post-item.html">List an Item</a></li>
+                        <li><a href="#">How It Works</a></li>
+                        <li><a href="#">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Safety</a></li>
+                        <li><a href="#">Insurance</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 E-Borrow. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
