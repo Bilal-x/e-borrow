@@ -162,6 +162,13 @@
             font-size: 0.875rem;
         }
 
+        .owner-avatar-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
         .booking-card {
             background: var(--white);
             border-radius: var(--border-radius);
@@ -398,12 +405,16 @@
                     </div>
                 </div>
 
-                <!-- Owner Section -->
+                <!-- Enhanced Owner Section -->
                 <div class="owner-section">
                     <h3>Meet Your Host</h3>
+                    <div class="owner-badges">
+                        <span class="verification-badge"><i class="fas fa-check-circle"></i> ID Verified</span>
+                        <span class="verification-badge"><i class="fas fa-shield-alt"></i> Trusted Renter</span>
+                    </div>
                     <div class="owner-info">
                         <div class="owner-avatar">
-                            <i class="fas fa-user"></i>
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Owner" class="owner-avatar-img">
                         </div>
                         <div class="owner-details">
                             <h4 id="owner-name">John Doe</h4>

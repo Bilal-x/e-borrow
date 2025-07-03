@@ -347,3 +347,430 @@ function updateNavigation() {
         loginLink.href = 'dashboard.html';
     }
 }
+
+// ===== ENHANCED UI/UX JAVASCRIPT ===== 
+
+// Enhanced Mobile Navigation with Animation
+function initEnhancedNavigation() {
+    const navToggle = document.getElementById('nav-toggle');
+    const navMenu = document.getElementById('nav-menu');
+    
+    if (navToggle && navMenu) {
+        navToggle.addEventListener('click', function() {
+            navToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!navMenu.contains(event.target) && !navToggle.contains(event.target) && navMenu.classList.contains('active')) {
+                navToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+    }
+}
+
+// Button Microinteractions
+function initMicrointeractions() {
+    // Add ripple effect to buttons
+    const buttons = document.querySelectorAll('.btn');
+    
+    buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            const rect = button.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.style.position = 'absolute';
+            ripple.style.width = '20px';
+            ripple.style.height = '20px';
+            ripple.style.borderRadius = '50%';
+            ripple.style.background = 'rgba(255, 255, 255, 0.6)';
+            ripple.style.transform = 'scale(0)';
+            ripple.style.animation = 'ripple 0.6s linear';
+            ripple.style.pointerEvents = 'none';
+            
+            button.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    });
+    
+    // Simulate loading state on form submissions
+    const forms = document.querySelectorAll('form');
+    
+    forms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            const submitBtn = form.querySelector('[type="submit"]');
+            
+            if (submitBtn && !submitBtn.classList.contains('btn-loading')) {
+                e.preventDefault();
+                
+                // Add loading state
+                submitBtn.classList.add('btn-loading');
+                const btnText = submitBtn.textContent;
+                submitBtn.innerHTML = '<span class="spinner"></span><span>' + btnText + '</span>';
+                
+                // Simulate form submission
+                setTimeout(() => {
+                    // Remove loading state
+                    submitBtn.classList.remove('btn-loading');
+                    submitBtn.innerHTML = btnText;
+                    
+                    // Proceed with form submission or show success
+                    if (form.id === 'login-form') {
+                        simulateLogin();
+                    } else if (form.id === 'register-form') {
+                        simulateRegistration();
+                    } else if (form.id === 'post-item-form') {
+                        simulateItemPosting();
+                    } else {
+                        form.submit();
+                    }
+                }, 1500);
+            }
+        });
+    });
+}
+
+// Enhanced Search and Filter Functionality
+function initSearchFilters() {
+    // Filter chips functionality
+    const filterChips = document.querySelectorAll('.filter-chip');
+    
+    filterChips.forEach(chip => {
+        const closeIcon = chip.querySelector('i');
+        
+        if (closeIcon) {
+            closeIcon.addEventListener('click', function(e) {
+                e.stopPropagation();
+                chip.remove();
+                updateSearchResults();
+            });
+        }
+        
+        if (chip.classList.contains('clear-all')) {
+            chip.addEventListener('click', function() {
+                document.querySelectorAll('.filter-chip:not(.clear-all)').forEach(c => c.remove());
+                updateSearchResults();
+            });
+        }
+    });
+    
+    // Price range slider
+    const priceSlider = document.getElementById('price-range');
+    const priceValue = document.getElementById('price-value');
+    
+    if (priceSlider && priceValue) {
+        priceSlider.addEventListener('input', function() {
+            priceValue.textContent = '₹' + this.value;
+        });
+    }
+    
+    // Sort dropdown
+    const sortDropdown = document.getElementById('sort-options');
+    
+    if (sortDropdown) {
+        sortDropdown.addEventListener('change', function() {
+            updateSearchResults();
+        });
+    }
+    
+    // Apply filters button
+    const applyFiltersBtn = document.querySelector('.apply-filters');
+    
+    if (applyFiltersBtn) {
+        applyFiltersBtn.addEventListener('click', function() {
+            // Simulate filter application
+            const loadingSpinner = document.createElement('span');
+            loadingSpinner.classList.add('spinner');
+            this.prepend(loadingSpinner);
+            
+            setTimeout(() => {
+                loadingSpinner.remove();
+                updateSearchResults();
+            }, 800);
+        });
+    }
+}
+
+// Update search results (simulation)
+function updateSearchResults() {
+    const resultsCount = document.querySelector('.search-results-count');
+    const emptyState = document.querySelector('.empty-state');
+    const itemsGrid = document.querySelector('.listings-grid');
+    
+    if (resultsCount && emptyState && itemsGrid) {
+        // Simulate loading state
+        itemsGrid.style.opacity = '0.5';
+        
+        setTimeout(() => {
+            // Get active filters
+            const activeFilters = document.querySelectorAll('.filter-chip:not(.clear-all)');
+            
+            // Simulate results based on filters
+            if (activeFilters.length > 3) {
+                // Show empty state if too many filters
+                resultsCount.style.display = 'none';
+                emptyState.style.display = 'block';
+                itemsGrid.style.display = 'none';
+            } else {
+                // Show results
+                const count = Math.max(1, 24 - (activeFilters.length * 5));
+                resultsCount.textContent = 'Showing ' + count + ' items near Kasargod';
+                resultsCount.style.display = 'block';
+                emptyState.style.display = 'none';
+                itemsGrid.style.display = 'grid';
+            }
+            
+            itemsGrid.style.opacity = '1';
+        }, 800);
+    }
+}
+
+// Item Gallery and Lightbox
+function initItemGallery() {
+    // Thumbnail gallery
+    const thumbnails = document.querySelectorAll('.thumbnail');
+    const mainImage = document.getElementById('featured-image');
+    
+    if (thumbnails.length && mainImage) {
+        thumbnails.forEach(thumb => {
+            thumb.addEventListener('click', function() {
+                // Update active thumbnail
+                thumbnails.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Update main image
+                const imageUrl = this.getAttribute('data-image');
+                mainImage.src = imageUrl;
+            });
+        });
+    }
+}
+
+// Show notification
+function showNotification(message, type = 'info') {
+    // Create notification element if it doesn't exist
+    let notification = document.querySelector('.notification');
+    
+    if (!notification) {
+        notification = document.createElement('div');
+        notification.classList.add('notification');
+        document.body.appendChild(notification);
+    }
+    
+    // Set type class
+    notification.className = 'notification';
+    notification.classList.add(`notification-${type}`);
+    
+    // Set message
+    notification.textContent = message;
+    
+    // Show notification
+    notification.classList.add('show');
+    
+    // Hide after 3 seconds
+    setTimeout(() => {
+        notification.classList.remove('show');
+    }, 3000);
+}
+
+// Empty States
+function initEmptyStates() {
+    // Check for empty listings in dashboard
+    const listingsContainer = document.querySelector('.listings-container');
+    const bookingsContainer = document.querySelector('.bookings-container');
+    
+    if (listingsContainer && listingsContainer.children.length === 0) {
+        showEmptyState(listingsContainer, 'camera', 'No listings yet', 'You haven\'t listed any items for rent. Share your items with the community and start earning!', 'Post Your First Item');
+    }
+    
+    if (bookingsContainer && bookingsContainer.children.length === 0) {
+        showEmptyState(bookingsContainer, 'calendar', 'No bookings yet', 'You don\'t have any active bookings. Browse items to rent or promote your listings to get more bookings.', 'Browse Items');
+    }
+}
+
+// Helper to create empty state
+function showEmptyState(container, icon, title, message, buttonText) {
+    const emptyState = document.createElement('div');
+    emptyState.classList.add('empty-state');
+    
+    emptyState.innerHTML = `
+        <i class="fas fa-${icon}"></i>
+        <h3>${title}</h3>
+        <p>${message}</p>
+        <button class="btn btn-primary">${buttonText}</button>
+    `;
+    
+    container.appendChild(emptyState);
+    
+    // Add button functionality
+    const button = emptyState.querySelector('button');
+    
+    if (button) {
+        button.addEventListener('click', function() {
+            if (buttonText === 'Post Your First Item') {
+                window.location.href = 'post-item.html';
+            } else if (buttonText === 'Browse Items') {
+                window.location.href = 'search.html';
+            }
+        });
+    }
+}
+
+// Enhanced Authentication
+function checkUserAuth() {
+    const isLoggedIn = localStorage.getItem('e-borrow-user');
+    const loginLinks = document.querySelectorAll('a[href="login.html"]');
+    const dashboardLinks = document.querySelectorAll('a[href="dashboard.html"]');
+    const userMenus = document.querySelectorAll('.user-menu');
+    
+    if (isLoggedIn) {
+        // User is logged in
+        const userData = JSON.parse(isLoggedIn);
+        
+        // Update login links to show user name
+        loginLinks.forEach(link => {
+            link.innerHTML = `<img src="${userData.avatar || 'https://randomuser.me/api/portraits/men/32.jpg'}" class="user-avatar-small"> ${userData.name}`;
+            link.href = 'dashboard.html';
+        });
+        
+        // Show dashboard links
+        dashboardLinks.forEach(link => {
+            link.style.display = 'block';
+        });
+        
+        // Update user menus
+        userMenus.forEach(menu => {
+            const nameElement = menu.querySelector('.user-name');
+            const avatarElement = menu.querySelector('.user-avatar');
+            
+            if (nameElement) nameElement.textContent = userData.name;
+            if (avatarElement) avatarElement.src = userData.avatar || 'https://randomuser.me/api/portraits/men/32.jpg';
+            
+            menu.style.display = 'block';
+        });
+    } else {
+        // User is not logged in
+        dashboardLinks.forEach(link => {
+            link.style.display = 'none';
+        });
+        
+        userMenus.forEach(menu => {
+            menu.style.display = 'none';
+        });
+    }
+}
+
+// Simulate login
+function simulateLogin() {
+    const emailInput = document.querySelector('#login-email');
+    const passwordInput = document.querySelector('#login-password');
+    
+    if (emailInput && passwordInput && emailInput.value && passwordInput.value) {
+        // Create user object
+        const user = {
+            name: emailInput.value.split('@')[0],
+            email: emailInput.value,
+            avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+            id: 'user_' + Date.now()
+        };
+        
+        // Store in localStorage
+        localStorage.setItem('e-borrow-user', JSON.stringify(user));
+        
+        // Show success message
+        showNotification('Login successful! Redirecting to dashboard...', 'success');
+        
+        // Redirect to dashboard
+        setTimeout(() => {
+            window.location.href = 'dashboard.html';
+        }, 1500);
+    } else {
+        showNotification('Please enter both email and password', 'error');
+    }
+}
+
+// Simulate registration
+function simulateRegistration() {
+    const nameInput = document.querySelector('#register-name');
+    const emailInput = document.querySelector('#register-email');
+    const passwordInput = document.querySelector('#register-password');
+    
+    if (nameInput && emailInput && passwordInput && 
+        nameInput.value && emailInput.value && passwordInput.value) {
+        // Create user object
+        const user = {
+            name: nameInput.value,
+            email: emailInput.value,
+            avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+            id: 'user_' + Date.now()
+        };
+        
+        // Store in localStorage
+        localStorage.setItem('e-borrow-user', JSON.stringify(user));
+        
+        // Show success message
+        showNotification('Registration successful! Redirecting to dashboard...', 'success');
+        
+        // Redirect to dashboard
+        setTimeout(() => {
+            window.location.href = 'dashboard.html';
+        }, 1500);
+    } else {
+        showNotification('Please fill in all fields', 'error');
+    }
+}
+
+// Simulate item posting
+function simulateItemPosting() {
+    const titleInput = document.querySelector('#item-title');
+    const categorySelect = document.querySelector('#item-category');
+    const priceInput = document.querySelector('#item-price');
+    
+    if (titleInput && categorySelect && priceInput && 
+        titleInput.value && categorySelect.value && priceInput.value) {
+        // Show success message
+        showNotification('Item posted successfully! Redirecting to your listings...', 'success');
+        
+        // Redirect to dashboard
+        setTimeout(() => {
+            window.location.href = 'dashboard.html';
+        }, 1500);
+    } else {
+        showNotification('Please fill in all required fields', 'error');
+    }
+}
+
+// Initialize all enhanced features
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize enhanced components
+    initEnhancedNavigation();
+    initMicrointeractions();
+    initSearchFilters();
+    initItemGallery();
+    initEmptyStates();
+    
+    // Check if user is logged in (from localStorage)
+    checkUserAuth();
+    
+    // Add CSS for ripple animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+});
