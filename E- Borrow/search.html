@@ -202,29 +202,40 @@
         </div>
     </section>
 
-    <!-- Filter Tags -->
+    <!-- Enhanced Filter Tags -->
     <section class="filter-section">
         <div class="container">
+            <!-- Active Filters (Enhanced) -->
+            <div class="filter-chips" id="filter-chips">
+                <div class="filter-chip">Electronics <i class="fas fa-times"></i></div>
+                <div class="filter-chip">Under ₹2500 <i class="fas fa-times"></i></div>
+                <div class="filter-chip">Kasargod <i class="fas fa-times"></i></div>
+                <div class="filter-chip">Available Jul 5-10 <i class="fas fa-times"></i></div>
+                <div class="filter-chip clear-all">Clear All Filters</div>
+            </div>
             <div class="filter-tags" id="filter-tags">
                 <!-- Active filters will be displayed here -->
             </div>
         </div>
     </section>
 
-    <!-- Results Section -->
+    <!-- Enhanced Results Section -->
     <section class="results-section">
         <div class="container">
+            <!-- Results Count and Sort (Enhanced) -->
             <div class="results-header">
-                <div class="results-count" id="results-count">
-                    Showing 6 items
+                <div class="search-results-count" id="results-count">
+                    Showing 24 items near Kasargod
                 </div>
-                <select class="sort-select" id="sort-select" onchange="sortListings()">
-                    <option value="relevance">Sort by Relevance</option>
-                    <option value="price-low">Price: Low to High</option>
-                    <option value="price-high">Price: High to Low</option>
-                    <option value="rating">Highest Rated</option>
-                    <option value="newest">Newest First</option>
-                </select>
+                <div class="sort-dropdown">
+                    <select id="sort-options" onchange="sortListings()">
+                        <option value="relevance">Sort by: Relevance</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="newest">Newest First</option>
+                        <option value="rating">Highest Rated</option>
+                    </select>
+                </div>
             </div>
 
             <div class="listings-grid" id="listings-grid">
