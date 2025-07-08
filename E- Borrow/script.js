@@ -750,6 +750,20 @@ function simulateItemPosting() {
     }
 }
 
+// Category Search Function
+function searchCategory(category) {
+    // Store the selected category in localStorage
+    localStorage.setItem('selectedCategory', category);
+    
+    // Show notification
+    showNotification(`Searching for ${category}...`, 'info');
+    
+    // Redirect to search page with category filter
+    setTimeout(() => {
+        window.location.href = `search.html?category=${category}`;
+    }, 500);
+}
+
 // Initialize all enhanced features
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize enhanced components
