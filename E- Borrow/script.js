@@ -255,17 +255,40 @@ const dummyListings = [
     }
 ];
 
-// Load dummy data into listings
-function loadDummyListings() {
+// Load listings from API
+async function loadDummyListings() {
     const listingsContainer = document.querySelector('.listings-grid, .listings-carousel');
     if (!listingsContainer) return;
 
-    listingsContainer.innerHTML = '';
+    listingsContainer.innerHTML = '<div class="loading-spinner"></div>';
 
-    dummyListings.forEach(listing => {
-        const listingCard = createListingCard(listing);
-        listingsContainer.appendChild(listingCard);
-    });
+    try {
+        // Get listings from API
+        const response = await api.listings.getListings();
+        
+        listingsContainer.innerHTML = '';
+        
+        if (response.listings && response.listings.length > 0) {
+            response.listings.forEach(listing => {
+                const listingCard = createListingCard(listing);
+                listingsContainer.appendChild(listingCard);
+            });
+        } else {
+            listingsContainer.innerHTML = '<div class="empty-state"><i class="fas fa-box-open"></i><p>No listings found</p></div>';
+        }
+    } catch (error) {
+        console.error('Error loading listings:', error);
+        listingsContainer.innerHTML = '<div class="error-state"><i class="fas fa-exclamation-circle"></i><p>Failed to load listings</p></div>';
+        
+        // Fallback to dummy data if API fails
+        setTimeout(() => {
+            listingsContainer.innerHTML = '';
+            dummyListings.forEach(listing => {
+                const listingCard = createListingCard(listing);
+                listingsContainer.appendChild(listingCard);
+            });
+        }, 2000);
+    }
 }
 
 function createListingCard(listing) {
@@ -279,23 +302,37 @@ function createListingCard(listing) {
         'Tools': 'fas fa-tools',
         'Electronics': 'fas fa-laptop',
         'Sports': 'fas fa-dumbbell',
-        'Furniture': 'fas fa-couch'
+        'Furniture': 'fas fa-couch',
+        'Outdoors': 'fas fa-mountain'
     };
 
+    // Get the first image or use placeholder
+    const imageUrl = listing.images && listing.images.length > 0 
+        ? listing.images[0] 
+        : null;
+    
+    // Get average rating or use placeholder
+    const rating = listing.avg_rating || 0;
+    const reviewCount = listing.reviews ? listing.reviews.length : 0;
+    
     card.innerHTML = `
         <div class="listing-image">
-            <div class="placeholder-image">
-                <i class="${categoryIcons[listing.category] || 'fas fa-box'}"></i>
-            </div>
+            ${imageUrl 
+                ? `<img src="${imageUrl}" alt="${listing.title}" loading="lazy">` 
+                : `<div class="placeholder-image">
+                    <i class="${categoryIcons[listing.category] || 'fas fa-box'}"></i>
+                   </div>`
+            }
         </div>
         <div class="listing-content">
             <h3>${listing.title}</h3>
             <p class="listing-location"><i class="fas fa-map-marker-alt"></i> ${listing.location}</p>
-            <p class="listing-price">$${listing.price}/day</p>
+            <p class="listing-price">₹${listing.price_per_day}/day</p>
             <div class="listing-rating">
                 <i class="fas fa-star"></i>
-                <span>${listing.rating} (${listing.reviews} reviews)</span>
+                <span>${rating.toFixed(1)} (${reviewCount} reviews)</span>
             </div>
+            ${listing.owner_name ? `<p class="listing-owner"><i class="fas fa-user"></i> ${listing.owner_name}</p>` : ''}
         </div>
     `;
 
@@ -305,7 +342,7 @@ function createListingCard(listing) {
 function viewListing(id) {
     // Store listing ID and redirect to detail page
     localStorage.setItem('selectedListingId', id);
-    window.location.href = 'item-detail.html';
+    window.location.href = `item-detail.html?id=${id}`;
 }
 
 // Initialize dummy data on page load
@@ -671,60 +708,59 @@ function checkUserAuth() {
 }
 
 // Simulate login
-function simulateLogin() {
+async function simulateLogin() {
     const emailInput = document.querySelector('#login-email');
     const passwordInput = document.querySelector('#login-password');
     
     if (emailInput && passwordInput && emailInput.value && passwordInput.value) {
-        // Create user object
-        const user = {
-            name: emailInput.value.split('@')[0],
-            email: emailInput.value,
-            avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
-            id: 'user_' + Date.now()
-        };
-        
-        // Store in localStorage
-        localStorage.setItem('e-borrow-user', JSON.stringify(user));
-        
-        // Show success message
-        showNotification('Login successful! Redirecting to dashboard...', 'success');
-        
-        // Redirect to dashboard
-        setTimeout(() => {
-            window.location.href = 'dashboard.html';
-        }, 1500);
+        try {
+            // Call the login API
+            const response = await api.auth.login({
+                email: emailInput.value,
+                password: passwordInput.value
+            });
+            
+            // Show success message
+            showNotification('Login successful! Redirecting to dashboard...', 'success');
+            
+            // Redirect to dashboard
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 1500);
+        } catch (error) {
+            showNotification(error || 'Login failed. Please check your credentials.', 'error');
+        }
     } else {
         showNotification('Please enter both email and password', 'error');
     }
 }
 
 // Simulate registration
-function simulateRegistration() {
+async function simulateRegistration() {
     const nameInput = document.querySelector('#register-name');
     const emailInput = document.querySelector('#register-email');
     const passwordInput = document.querySelector('#register-password');
     
     if (nameInput && emailInput && passwordInput && 
         nameInput.value && emailInput.value && passwordInput.value) {
-        // Create user object
-        const user = {
-            name: nameInput.value,
-            email: emailInput.value,
-            avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
-            id: 'user_' + Date.now()
-        };
-        
-        // Store in localStorage
-        localStorage.setItem('e-borrow-user', JSON.stringify(user));
-        
-        // Show success message
-        showNotification('Registration successful! Redirecting to dashboard...', 'success');
-        
-        // Redirect to dashboard
-        setTimeout(() => {
-            window.location.href = 'dashboard.html';
-        }, 1500);
+        try {
+            // Call the register API
+            const response = await api.auth.register({
+                name: nameInput.value,
+                email: emailInput.value,
+                password: passwordInput.value
+            });
+            
+            // Show success message
+            showNotification('Registration successful! Redirecting to dashboard...', 'success');
+            
+            // Redirect to dashboard
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 1500);
+        } catch (error) {
+            showNotification(error || 'Registration failed. Please try again.', 'error');
+        }
     } else {
         showNotification('Please fill in all fields', 'error');
     }
