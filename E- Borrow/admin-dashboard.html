@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | E-Borrow</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --sidebar-width: 250px;
+            --header-height: 70px;
+            --admin-primary: #4B5FB5;
+            --admin-secondary: #8FCBF2;
+            --admin-success: #4CAF50;
+            --admin-warning: #FFC107;
+            --admin-danger: #F44336;
+            --admin-info: #2196F3;
+            --admin-light: #F5F5F5;
+            --admin-dark: #333333;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .admin-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .admin-sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--admin-dark);
+            color: var(--white);
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .admin-sidebar-header {
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .admin-sidebar-toggle {
+            background: none;
+            border: none;
+            color: var(--white);
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: none;
+        }
+
+        .admin-sidebar-menu {
+            padding: 1rem 0;
+        }
+
+        .admin-sidebar-item {
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .admin-sidebar-item:hover,
+        .admin-sidebar-item.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            border-left-color: var(--admin-primary);
+        }
+
+        .admin-sidebar-item i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .admin-sidebar-divider {
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 1rem 0;
+        }
+
+        .admin-sidebar-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: var(--admin-dark);
+        }
+
+        .admin-user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .admin-user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--admin-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .admin-user-details {
+            flex: 1;
+        }
+
+        .admin-user-name {
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .admin-user-role {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .admin-logout {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .admin-logout:hover {
+            color: var(--white);
+        }
+
+        /* Main Content Styles */
+        .admin-main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            transition: all 0.3s ease;
+        }
+
+        .admin-header {
+            height: var(--header-height);
+            background-color: var(--white);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 900;
+        }
+
+        .admin-header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .admin-mobile-toggle {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text);
+            display: none;
+        }
+
+        .admin-page-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .admin-header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .admin-header-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--gray-light);
+            color: var(--text);
+            text-decoration: none;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .admin-header-icon:hover {
+            background-color: var(--gray-medium);
+        }
+
+        .admin-notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--admin-danger);
+            color: var(--white);
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .admin-content {
+            padding: 2rem;
+            background-color: var(--gray-light);
+            min-height: calc(100vh - var(--header-height));
+        }
+
+        /* Dashboard Cards */
+        .admin-dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .admin-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .admin-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
+        }
+
+        .admin-stat-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .admin-stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .admin-stat-icon.users {
+            background-color: rgba(75, 95, 181, 0.1);
+            color: var(--admin-primary);
+        }
+
+        .admin-stat-icon.listings {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--admin-success);
+        }
+
+        .admin-stat-icon.bookings {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: var(--admin-warning);
+        }
+
+        .admin-stat-icon.revenue {
+            background-color: rgba(33, 150, 243, 0.1);
+            color: var(--admin-info);
+        }
+
+        .admin-stat-content {
+            flex: 1;
+        }
+
+        .admin-stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.25rem;
+        }
+
+        .admin-stat-label {
+            color: var(--gray-dark);
+            font-size: 0.9rem;
+        }
+
+        .admin-stat-change {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .admin-stat-change.positive {
+            color: var(--admin-success);
+        }
+
+        .admin-stat-change.negative {
+            color: var(--admin-danger);
+        }
+
+        /* Charts and Tables */
+        .admin-charts-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .admin-chart-container {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+        }
+
+        .admin-chart-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .admin-chart-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .admin-chart-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .admin-chart-action {
+            padding: 0.5rem;
+            background-color: var(--gray-light);
+            border-radius: var(--border-radius-sm);
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .admin-chart-action:hover {
+            background-color: var(--gray-medium);
+        }
+
+        .admin-chart {
+            height: 300px;
+            position: relative;
+        }
+
+        .admin-chart-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 1rem;
+            color: var(--gray-dark);
+        }
+
+        .admin-chart-placeholder i {
+            font-size: 3rem;
+            opacity: 0.5;
+        }
+
+        /* Tables */
+        .admin-table-container {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .admin-table th,
+        .admin-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .admin-table th {
+            font-weight: 600;
+            color: var(--text);
+            background-color: var(--gray-light);
+        }
+
+        .admin-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .admin-table tr:hover td {
+            background-color: var(--gray-light);
+        }
+
+        .admin-table-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .admin-table-status.active {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--admin-success);
+        }
+
+        .admin-table-status.pending {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: var(--admin-warning);
+        }
+
+        .admin-table-status.inactive {
+            background-color: rgba(244, 67, 54, 0.1);
+            color: var(--admin-danger);
+        }
+
+        .admin-table-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .admin-table-action {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--gray-light);
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .admin-table-action:hover {
+            background-color: var(--gray-medium);
+        }
+
+        .admin-table-action.edit:hover {
+            background-color: var(--admin-info);
+            color: var(--white);
+        }
+
+        .admin-table-action.delete:hover {
+            background-color: var(--admin-danger);
+            color: var(--white);
+        }
+
+        .admin-table-action.view:hover {
+            background-color: var(--admin-success);
+            color: var(--white);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .admin-charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .admin-sidebar {
+                transform: translateX(-100%);
+            }
+
+            .admin-sidebar.active {
+                transform: translateX(0);
+            }
+
+            .admin-main {
+                margin-left: 0;
+            }
+
+            .admin-mobile-toggle {
+                display: block;
+            }
+
+            .admin-dashboard-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        @media (max-width: 576px) {
+            .admin-dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-header {
+                padding: 0 1rem;
+            }
+
+            .admin-content {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" id="admin-sidebar">
+            <div class="admin-sidebar-header">
+                <a href="admin-dashboard.html" class="admin-sidebar-logo">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>E-Borrow Admin</span>
+                </a>
+                <button class="admin-sidebar-toggle" id="admin-sidebar-toggle">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <nav class="admin-sidebar-menu">
+                <a href="admin-dashboard.html" class="admin-sidebar-item active">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="admin-sidebar-item">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                </a>
+                <a href="#" class="admin-sidebar-item">
+                    <i class="fas fa-box"></i>
+                    <span>Listings</span>
+                </a>
+                <a href="#" class="admin-sidebar-item">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Bookings</span>
+                </a>
+                <a href="#" class="admin-sidebar-item">
+                    <i class="fas fa-star"></i>
+                    <span>Reviews</span>
+                </a>
+
+                <div class="admin-sidebar-divider"></div>
+
+                <a href="#" class="admin-sidebar-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+                <a href="#" class="admin-sidebar-item">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>Transactions</span>
+                </a>
+                <a href="#" class="admin-sidebar-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="admin-sidebar-footer">
+                <div class="admin-user-info">
+                    <div class="admin-user-avatar">
+                        <span>A</span>
+                    </div>
+                    <div class="admin-user-details">
+                        <div class="admin-user-name">Admin</div>
+                        <div class="admin-user-role">Administrator</div>
+                    </div>
+                </div>
+                <a href="#" class="admin-logout" id="admin-logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Header -->
+            <header class="admin-header">
+                <div class="admin-header-left">
+                    <button class="admin-mobile-toggle" id="admin-mobile-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="admin-page-title">Dashboard</h1>
+                </div>
+                <div class="admin-header-right">
+                    <a href="#" class="admin-header-icon">
+                        <i class="fas fa-bell"></i>
+                        <span class="admin-notification-badge">5</span>
+                    </a>
+                    <a href="#" class="admin-header-icon">
+                        <i class="fas fa-envelope"></i>
+                        <span class="admin-notification-badge">3</span>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="admin-content">
+                <!-- Stats Cards -->
+                <div class="admin-dashboard-grid">
+                    <div class="admin-card admin-stat-card">
+                        <div class="admin-stat-icon users">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="admin-stat-content">
+                            <div class="admin-stat-value">1,254</div>
+                            <div class="admin-stat-label">Total Users</div>
+                            <div class="admin-stat-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>12.5% this month</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="admin-card admin-stat-card">
+                        <div class="admin-stat-icon listings">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <div class="admin-stat-content">
+                            <div class="admin-stat-value">3,782</div>
+                            <div class="admin-stat-label">Active Listings</div>
+                            <div class="admin-stat-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>8.3% this month</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="admin-card admin-stat-card">
+                        <div class="admin-stat-icon bookings">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="admin-stat-content">
+                            <div class="admin-stat-value">945</div>
+                            <div class="admin-stat-label">Completed Bookings</div>
+                            <div class="admin-stat-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>5.7% this month</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="admin-card admin-stat-card">
+                        <div class="admin-stat-icon revenue">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="admin-stat-content">
+                            <div class="admin-stat-value">₹152,450</div>
+                            <div class="admin-stat-label">Total Revenue</div>
+                            <div class="admin-stat-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>15.2% this month</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="admin-charts-grid">
+                    <div class="admin-chart-container">
+                        <div class="admin-chart-header">
+                            <h2 class="admin-chart-title">Booking Analytics</h2>
+                            <div class="admin-chart-actions">
+                                <a href="#" class="admin-chart-action">Weekly</a>
+                                <a href="#" class="admin-chart-action">Monthly</a>
+                                <a href="#" class="admin-chart-action">Yearly</a>
+                            </div>
+                        </div>
+                        <div class="admin-chart">
+                            <div class="admin-chart-placeholder">
+                                <i class="fas fa-chart-line"></i>
+                                <p>Booking trends over time would appear here</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="admin-chart-container">
+                        <div class="admin-chart-header">
+                            <h2 class="admin-chart-title">Popular Categories</h2>
+                            <div class="admin-chart-actions">
+                                <a href="#" class="admin-chart-action">View All</a>
+                            </div>
+                        </div>
+                        <div class="admin-chart">
+                            <div class="admin-chart-placeholder">
+                                <i class="fas fa-chart-pie"></i>
+                                <p>Category distribution would appear here</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Listings Table -->
+                <div class="admin-table-container">
+                    <div class="admin-chart-header">
+                        <h2 class="admin-chart-title">Recent Listings</h2>
+                        <div class="admin-chart-actions">
+                            <a href="#" class="admin-chart-action">View All</a>
+                        </div>
+                    </div>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Category</th>
+                                <th>Owner</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Canon EOS R5</td>
+                                <td>Photography</td>
+                                <td>John Doe</td>
+                                <td>₹500/day</td>
+                                <td><span class="admin-table-status active">Active</span></td>
+                                <td>
+                                    <div class="admin-table-actions">
+                                        <a href="#" class="admin-table-action view" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="#" class="admin-table-action edit" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="#" class="admin-table-action delete" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Mountain Bike</td>
+                                <td>Sports</td>
+                                <td>Sarah Wilson</td>
+                                <td>₹200/day</td>
+                                <td><span class="admin-table-status active">Active</span></td>
+                                <td>
+                                    <div class="admin-table-actions">
+                                        <a href="#" class="admin-table-action view" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="#" class="admin-table-action edit" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="#" class="admin-table-action delete" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>MacBook Pro</td>
+                                <td>Electronics</td>
+                                <td>Mike Johnson</td>
+                                <td>₹800/day</td>
+                                <td><span class="admin-table-status pending">Pending</span></td>
+                                <td>
+                                    <div class="admin-table-actions">
+                                        <a href="#" class="admin-table-action view" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="#" class="admin-table-action edit" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="#" class="admin-table-action delete" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Camping Tent</td>
+                                <td>Outdoors</td>
+                                <td>Emily Chen</td>
+                                <td>₹350/day</td>
+                                <td><span class="admin-table-status active">Active</span></td>
+                                <td>
+                                    <div class="admin-table-actions">
+                                        <a href="#" class="admin-table-action view" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="#" class="admin-table-action edit" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="#" class="admin-table-action delete" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Power Drill</td>
+                                <td>Tools</td>
+                                <td>Robert Brown</td>
+                                <td>₹150/day</td>
+                                <td><span class="admin-table-status inactive">Inactive</span></td>
+                                <td>
+                                    <div class="admin-table-actions">
+                                        <a href="#" class="admin-table-action view" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="#" class="admin-table-action edit" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="#" class="admin-table-action delete" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Recent Bookings Table -->
+                <div class="admin-table-container">
+                    <div class="admin-chart-header">
+                        <h2 class="admin-chart-title">Recent Bookings</h2>
+                        <div class="admin-chart-actions">
+                            <a href="#" class="admin-chart-action">View All</a>
+                        </div>
+                    </div>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Booking ID</th>
+                                <th>Item</th>
+                                <th>Renter</th>
+                                <th>Dates</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#BK-1234</td>
+                                <td>Canon EOS R5</td>
+                                <td>Alex Thompson</td>
+                                <td>Jul 5 - Jul 10, 2025</td>
+                                <td>₹2,500</td>
+                                <td><span class="admin-table-status active">Completed</span></td>
+                                <td>
+                                    <div class="admin-table-actions">
+                                        <a href="#" class="admin-table-action view" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#BK-1235</td>
+                                <td>Mountain Bike</td>
+                                <td>Jessica Lee</td>
+                                <td>Jul 7 - Jul 9, 2025</td>
+                                <td>₹600</td>
+                                <td><span class="admin-table-status active">Completed</span></td>
+                                <td>
+                                    <div class="admin-table-actions">
+                                        <a href="#" class="admin-table-action view" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#BK-1236</td>
+                                <td>MacBook Pro</td>
+                                <td>David Wilson</td>
+                                <td>Jul 8 - Jul 15, 2025</td>
+                                <td>₹5,600</td>
+                                <td><span class="admin-table-status pending">In Progress</span></td>
+                                <td>
+                                    <div class="admin-table-actions">
+                                        <a href="#" class="admin-table-action view" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#BK-1237</td>
+                                <td>Camping Tent</td>
+                                <td>Sophia Garcia</td>
+                                <td>Jul 10 - Jul 12, 2025</td>
+                                <td>₹700</td>
+                                <td><span class="admin-table-status pending">In Progress</span></td>
+                                <td>
+                                    <div class="admin-table-actions">
+                                        <a href="#" class="admin-table-action view" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#BK-1238</td>
+                                <td>Power Drill</td>
+                                <td>Michael Brown</td>
+                                <td>Jul 12 - Jul 13, 2025</td>
+                                <td>₹150</td>
+                                <td><span class="admin-table-status pending">Upcoming</span></td>
+                                <td>
+                                    <div class="admin-table-actions">
+                                        <a href="#" class="admin-table-action view" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if admin is logged in
+            const adminSession = localStorage.getItem('e-borrow-admin');
+            if (!adminSession) {
+                window.location.href = 'admin-login.html';
+                return;
+            }
+
+            // Mobile sidebar toggle
+            const mobileToggle = document.getElementById('admin-mobile-toggle');
+            const sidebar = document.getElementById('admin-sidebar');
+            const sidebarToggle = document.getElementById('admin-sidebar-toggle');
+
+            if (mobileToggle) {
+                mobileToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('active');
+                });
+            }
+
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', function() {
+                    sidebar.classList.remove('active');
+                });
+            }
+
+            // Logout functionality
+            const logoutBtn = document.getElementById('admin-logout');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Show confirmation
+                    if (confirm('Are you sure you want to logout?')) {
+                        // Clear admin session
+                        localStorage.removeItem('e-borrow-admin');
+                        
+                        // Redirect to login page
+                        window.location.href = 'admin-login.html';
+                    }
+                });
+            }
+
+            // Initialize notification system
+            initNotificationSystem();
+        });
+
+        // Notification system
+        function initNotificationSystem() {
+            const notificationIcons = document.querySelectorAll('.admin-header-icon');
+            
+            notificationIcons.forEach(icon => {
+                icon.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showNotification('Notification feature coming soon!', 'info');
+                });
+            });
+        }
+
+        // Show notification
+        function showNotification(message, type = 'info') {
+            // Create notification element if it doesn't exist
+            let notification = document.querySelector('.notification');
+            
+            if (!notification) {
+                notification = document.createElement('div');
+                notification.classList.add('notification');
+                document.body.appendChild(notification);
+            }
+            
+            // Set type class
+            notification.className = 'notification';
+            notification.classList.add(`notification-${type}`);
+            
+            // Set message
+            notification.textContent = message;
+            
+            // Show notification
+            notification.classList.add('show');
+            
+            // Hide after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
