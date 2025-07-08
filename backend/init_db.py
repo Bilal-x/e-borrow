@@ -1,9 +1,9 @@
-from app import create_app
-from models import db
-from models.user import User
-from models.listing import Listing, ListingImage, ListingFeature
-from models.booking import Booking
-from models.review import Review
+from backend.app import create_app
+from backend.models import db
+from backend.models.user import User
+from backend.models.listing import Listing, ListingImage, ListingFeature
+from backend.models.booking import Booking
+from backend.models.review import Review
 from datetime import datetime, timedelta
 import random
 

@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# Navigate to backend directory
-cd /workspace/e-borrow-repo/backend
+# Navigate to project directory
+cd /workspace/e-borrow-repo
 
 # Initialize the database with sample data
 echo "Initializing database..."
-python init_db.py
+python -m backend.init_db
 
 # Run the Flask application
 echo "Starting Flask application..."
-python app.py
+python -m backend.app

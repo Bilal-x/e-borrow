@@ -1,12 +1,12 @@
 from flask import request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from . import api
-from ..models import db
-from ..models.user import User
-from ..models.listing import Listing, ListingImage, ListingFeature
+from backend.models import db
+from backend.models.user import User
+from backend.models.listing import Listing, ListingImage, ListingFeature
 import os
 from werkzeug.utils import secure_filename
-from ..config import Config
+from backend.config import Config
 
 @api.route('/listings', methods=['GET'])
 def get_listings():

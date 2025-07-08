@@ -3,9 +3,9 @@ from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 import os
 
-from config import Config
-from models import db
-from api import api
+from backend.config import Config
+from backend.models import db
+from backend.api import api
 
 def create_app(config_class=Config):
     app = Flask(__name__, static_folder='../E- Borrow')

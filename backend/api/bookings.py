@@ -1,10 +1,10 @@
 from flask import request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from . import api
-from ..models import db
-from ..models.user import User
-from ..models.listing import Listing
-from ..models.booking import Booking
+from backend.models import db
+from backend.models.user import User
+from backend.models.listing import Listing
+from backend.models.booking import Booking
 from datetime import datetime
 
 @api.route('/bookings', methods=['GET'])
